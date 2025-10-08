@@ -1,0 +1,7 @@
+{
+  "databaseChangeLog": [
+    {
+      "includeAll": {"path": "changelog/changes/"}
+    }
+  ]
+}

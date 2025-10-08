@@ -1,13 +1,12 @@
-package com.example.genealogie.Mapper;
+package com.example.genealogie.mapper;
 
-import com.example.genealogie.Dto.ProfileRequestDto;
-import com.example.genealogie.Dto.ProfileResponseDto;
-import com.example.genealogie.Model.Gender;
-import com.example.genealogie.Model.Profile;
-import com.example.genealogie.Model.User;
-import com.example.genealogie.Service.UserService;
+import com.example.genealogie.dto.ProfileRequestDto;
+import com.example.genealogie.dto.ProfileResponseDto;
+import com.example.genealogie.model.Gender;
+import com.example.genealogie.model.Profile;
+import com.example.genealogie.model.User;
+import com.example.genealogie.service.UserService;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,10 +30,29 @@ public abstract class ProfileMapper {
         return dto;
     }
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "user", expression = "java(getUserById(userId))")
-    @Mapping(target = "gender", expression = "java(stringToGender(requestDto.getGender()))")
-    public abstract Profile toEntity(ProfileRequestDto requestDto, Long userId);
+
+    public Profile toEntity(ProfileRequestDto requestDto, Long userId) {
+        if (requestDto == null) {
+            return null;
+        }
+
+        Profile profile = new Profile();
+
+        profile.setFirstName(requestDto.getFirstName());
+        profile.setLastName(requestDto.getLastName());
+        profile.setResidence(requestDto.getResidence());
+        profile.setDateOfBirth(requestDto.getDateOfBirth());
+        profile.setDateOfDeath(requestDto.getDateOfDeath());
+
+        profile.setGender(getGender(requestDto.getGender()));
+
+        if (userId != null) {
+            User user = getUserById(userId);
+            profile.setUser(user);
+        }
+
+        return profile;
+    }
 
     @Named("stringToGender")
     private Gender getGender(String gender) {

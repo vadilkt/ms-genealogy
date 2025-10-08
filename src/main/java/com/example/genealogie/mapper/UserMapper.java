@@ -1,7 +1,7 @@
-package com.example.genealogie.Mapper;
+package com.example.genealogie.mapper;
 
-import com.example.genealogie.Dto.UserRequestDto;
-import com.example.genealogie.Model.User;
+import com.example.genealogie.dto.UserRequestDto;
+import com.example.genealogie.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
