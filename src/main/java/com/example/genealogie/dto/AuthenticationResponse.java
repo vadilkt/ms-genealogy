@@ -1,4 +1,4 @@
-package com.example.genealogie.Dto;
+package com.example.genealogie.dto;
 
 import lombok.Getter;
 import lombok.Setter;

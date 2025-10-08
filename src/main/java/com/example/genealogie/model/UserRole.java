@@ -1,4 +1,4 @@
-package com.example.genealogie.Model;
+package com.example.genealogie.model;
 
 public enum UserRole {
     ADMIN,

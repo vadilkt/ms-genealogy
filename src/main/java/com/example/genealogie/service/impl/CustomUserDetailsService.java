@@ -1,7 +1,6 @@
-package com.example.genealogie.Service.impl;
+package com.example.genealogie.service.impl;
 
-import com.example.genealogie.Model.User;
-import com.example.genealogie.Repository.UserRepository;
+import com.example.genealogie.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

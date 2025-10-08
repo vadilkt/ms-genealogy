@@ -1,0 +1,65 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "2025-10-07",
+        "author": "Vadil K.",
+        "comment": "Create a users table",
+        "changes": [
+          {
+            "createTable": {
+              "tableName": "users",
+              "columns": [
+                {
+                  "column": {
+                    "name": "id",
+                    "type": "bigint",
+                    "autoIncrement": true,
+                    "constraints": {
+                      "primaryKey": true,
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "username",
+                    "type": "VARCHAR(255)",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "password",
+                    "type": "VARCHAR(255)",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "email",
+                    "type": "VARCHAR(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "role",
+                    "type": "VARCHAR(50)",
+                    "defaultValue": "USER",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

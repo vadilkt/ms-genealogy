@@ -1,10 +1,11 @@
-package com.example.genealogie.Service.impl;
+package com.example.genealogie.service.impl;
 
-import com.example.genealogie.Dto.UserRequestDto;
-import com.example.genealogie.Mapper.UserMapper;
-import com.example.genealogie.Model.User;
-import com.example.genealogie.Repository.UserRepository;
-import com.example.genealogie.Service.UserService;
+import com.example.genealogie.dto.UserRequestDto;
+import com.example.genealogie.mapper.UserMapper;
+import com.example.genealogie.model.User;
+import com.example.genealogie.repository.UserRepository;
+import com.example.genealogie.service.UserService;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(UserRequestDto userRequestDto) {
+        if(userRepository.findByUsername(userRequestDto.getUsername()).isPresent()) {
+            throw new EntityExistsException("Username already exists");
+        }
+        if(userRequestDto.getEmail() != null && userRepository.findByEmail(userRequestDto.getEmail()).isPresent()) {
+            throw new EntityExistsException("Email already exists");
+        }
         User user = userMapper.toUser(userRequestDto);
         user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
         return userRepository.save(user);

@@ -1,6 +1,5 @@
-package com.example.genealogie.Model;
+package com.example.genealogie.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,21 +13,12 @@ import java.time.ZonedDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "profile")
-public class Profile {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @Column(unique = true, nullable = false)
-    @NotNull
-    private User user;
+public class ProfileRequestDto {
     @NotNull
     private String firstName;
     private String lastName;
     @NotNull
-    private Gender gender;
+    private String gender;
     @NotNull
     private ZonedDateTime dateOfBirth;
     @Nullable
@@ -36,5 +26,3 @@ public class Profile {
     @NotNull
     private String residence;
 }
-
-
