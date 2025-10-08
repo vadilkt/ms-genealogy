@@ -3,8 +3,11 @@ package com.example.genealogie.service.impl;
 import com.example.genealogie.model.Profile;
 import com.example.genealogie.repository.ProfileRepository;
 import com.example.genealogie.service.ProfileService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,5 +21,18 @@ public class ProfileServiceImpl implements ProfileService {
             throw new IllegalArgumentException("Un profil avec cet utilisateur existe déjà !");
         }
         return profileRepository.save(profile);
+    }
+
+    public Profile getProfileById(Long id) {
+        return profileRepository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("Ce profil n'existe pas!"));
+    }
+
+    @Override
+    public List<Profile> searchProfile(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return profileRepository.findAll();
+        }
+        return profileRepository.findByKeyword(keyword);
     }
 }
