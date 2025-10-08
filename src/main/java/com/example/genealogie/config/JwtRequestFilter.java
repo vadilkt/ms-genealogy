@@ -28,7 +28,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private static final List<String> PUBLIC_ENDPOINTS = Arrays.asList(
             "/api/auth/login",
             "/api/auth/register",
-            "/api/public"
+            "/api/profile/"
     );
 
     @Override
