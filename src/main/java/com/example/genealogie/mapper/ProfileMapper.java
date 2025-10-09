@@ -7,6 +7,8 @@ import com.example.genealogie.model.Profile;
 import com.example.genealogie.model.User;
 import com.example.genealogie.service.UserService;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,6 +31,10 @@ public abstract class ProfileMapper {
 
         return dto;
     }
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    public abstract Profile update(@MappingTarget Profile target, Profile source);
 
 
     public Profile toEntity(ProfileRequestDto requestDto, Long userId) {

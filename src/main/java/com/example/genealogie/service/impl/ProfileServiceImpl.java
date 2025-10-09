@@ -1,6 +1,8 @@
 package com.example.genealogie.service.impl;
 
 import com.example.genealogie.model.Profile;
+import com.example.genealogie.model.User;
+import com.example.genealogie.model.UserRole;
 import com.example.genealogie.repository.ProfileRepository;
 import com.example.genealogie.service.ProfileService;
 import jakarta.persistence.EntityNotFoundException;
@@ -35,4 +37,23 @@ public class ProfileServiceImpl implements ProfileService {
         }
         return profileRepository.findByKeyword(keyword);
     }
+
+    @Override
+    public Profile update(Profile profile, User user) {
+        if(!canEditProfile(profile, user)) {
+            throw new SecurityException("You are not authorized to edit this profile");
+        }
+        profile.setUser(user);
+        return profileRepository.save(profile);
+    }
+
+    private boolean canEditProfile(Profile profile, User currentUser) {
+        if(currentUser.getRole() == UserRole.ADMIN) {
+            return true;
+        }
+
+        return profile.getUser().getId().equals(currentUser.getId());
+    }
+
+
 }
