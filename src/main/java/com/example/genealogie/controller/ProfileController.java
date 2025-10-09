@@ -60,4 +60,11 @@ public class ProfileController {
         return ResponseEntity.ok(profileMapper.toDto(updated));
     }
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteProfile(@PathVariable Long id) {
+        profileService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
