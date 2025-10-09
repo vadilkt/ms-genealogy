@@ -11,4 +11,5 @@ public interface ProfileService {
     Profile getProfileById(Long id);
     List<Profile> searchProfile(String keyword);
     Profile update(Profile profile, User user);
+    void delete(Long profileId);
 }

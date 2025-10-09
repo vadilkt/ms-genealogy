@@ -47,6 +47,12 @@ public class ProfileServiceImpl implements ProfileService {
         return profileRepository.save(profile);
     }
 
+    @Override
+    public void delete(Long profileId) {
+        Profile profile = getProfileById(profileId);
+        profileRepository.delete(profile);
+    }
+
     private boolean canEditProfile(Profile profile, User currentUser) {
         if(currentUser.getRole() == UserRole.ADMIN) {
             return true;
@@ -54,6 +60,7 @@ public class ProfileServiceImpl implements ProfileService {
 
         return profile.getUser().getId().equals(currentUser.getId());
     }
+
 
 
 }
