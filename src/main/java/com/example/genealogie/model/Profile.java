@@ -1,5 +1,6 @@
 package com.example.genealogie.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,8 @@ import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.lang.Nullable;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,6 +39,10 @@ public class Profile {
     private ZonedDateTime dateOfDeath;
     @NotNull
     private String residence;
+
+    @OneToMany(mappedBy = "profile")
+    @JsonManagedReference
+    private List<ProfessionalProfile> professionalProfiles = new ArrayList<>();
 }
 
 
