@@ -1,10 +1,15 @@
 package com.example.genealogie.controller;
 
+import com.example.genealogie.dto.ProfessionalProfileRequestDto;
+import com.example.genealogie.dto.ProfessionalProfileResponseDto;
 import com.example.genealogie.dto.ProfileRequestDto;
 import com.example.genealogie.dto.ProfileResponseDto;
+import com.example.genealogie.mapper.ProfessionalProfileMapper;
 import com.example.genealogie.mapper.ProfileMapper;
+import com.example.genealogie.model.ProfessionalProfile;
 import com.example.genealogie.model.Profile;
 import com.example.genealogie.model.User;
+import com.example.genealogie.service.ProfessionalProfileService;
 import com.example.genealogie.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +24,8 @@ import java.util.List;
 @RequestMapping("/api/profile")
 public class ProfileController {
     private final ProfileMapper profileMapper;
+    private final ProfessionalProfileMapper professionalProfileMapper;
+    private final ProfessionalProfileService professionalProfileService;
     private final ProfileService profileService;
 
     @PostMapping("/{userId}")
@@ -65,6 +72,15 @@ public class ProfileController {
     public ResponseEntity<Void> deleteProfile(@PathVariable Long id) {
         profileService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/professional")
+    public ResponseEntity<ProfessionalProfileResponseDto> createProfessionalProfil(@PathVariable Long id,
+                                                                                   @RequestBody ProfessionalProfileRequestDto requestDto) {
+        ProfessionalProfile professionalProfile = professionalProfileMapper.toEntity(requestDto, id);
+        professionalProfileService.create(professionalProfile);
+
+        return ResponseEntity.ok().body(professionalProfileMapper.toDto(professionalProfile));
     }
 
 }

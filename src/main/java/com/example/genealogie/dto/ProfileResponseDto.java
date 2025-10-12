@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,5 +19,7 @@ public class ProfileResponseDto {
     private String gender;
     private ZonedDateTime dateOfBirth;
     private ZonedDateTime dateOfDeath;
+    private Integer age;
     private String residence;
+    private List<ProfessionalProfileResponseDto> professionalRecords;
 }
