@@ -17,14 +17,19 @@ public class ProfessionalProfileServiceImpl implements ProfessionalProfileServic
     private final ProfessionalProfileRepository professionalProfileRepository;
 
     @Override
-    public ProfessionalProfile getById(Long id) {
-        return professionalProfileRepository.findById(id)
+    public ProfessionalProfile getById(Long id, User user) {
+        ProfessionalProfile professionalProfile = professionalProfileRepository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException(String.format("Professional profile with id %s not found", id)));
+        if(!isCurrentUser(professionalProfile.getProfile(), user)) {
+            throw new SecurityException("You do not have permission to access this resource");
+        }
+
+        return professionalProfile;
     }
 
     @Override
-    public ProfessionalProfile create(ProfessionalProfile professionalProfile) {
-        if(!isCurrentUser(professionalProfile.getProfile(), professionalProfile.getProfile().getUser())) {
+    public ProfessionalProfile create(ProfessionalProfile professionalProfile, User user) {
+        if(!isCurrentUser(professionalProfile.getProfile(), user)) {
             throw new SecurityException("You are not authorized to create a professional profile");
         }
         return professionalProfileRepository.save(professionalProfile);
