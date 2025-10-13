@@ -92,4 +92,16 @@ public class ProfileController {
         return ResponseEntity.ok().body(professionalProfileMapper.toDto(professionalProfile));
     }
 
+    @GetMapping("/{id}/professional")
+    public ResponseEntity<List<ProfessionalProfileResponseDto>> getProfessionalExById(@PathVariable Long id,
+                                                                                      @AuthenticationPrincipal User currentUser) {
+        List<ProfessionalProfile> professionalProfiles = professionalProfileService.getAllByProfileId(id, currentUser);
+
+        List<ProfessionalProfileResponseDto> dtos = professionalProfiles.stream()
+                .map(professionalProfileMapper::toDto)
+                .toList();
+
+        return ResponseEntity.ok().body(dtos);
+    }
+
 }
