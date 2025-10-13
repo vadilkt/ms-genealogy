@@ -49,6 +49,14 @@ public class ProfessionalProfileServiceImpl implements ProfessionalProfileServic
         return professionalProfileRepository.save(professionalProfile);
     }
 
+    @Override
+    public void delete(Long profileId, User user) {
+        validateAccess(profileService.getProfileById(profileId), user);
+        ProfessionalProfile professionalProfile = professionalProfileRepository.findById(profileId)
+                .orElseThrow(()-> new EntityNotFoundException(String.format("Professional profile with id %s not found", profileId)));
+        professionalProfileRepository.delete(professionalProfile);
+    }
+
     private boolean isCurrentUser(Profile profile, User currentUser){
         if(currentUser.getRole() == UserRole.ADMIN) return true;
 

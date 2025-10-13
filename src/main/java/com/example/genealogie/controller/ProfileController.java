@@ -103,6 +103,12 @@ public class ProfileController {
         return ResponseEntity.ok(professionalProfileMapper.toDto(professionalProfileService.update(existingProfessional, currentUser)));
     }
 
+    @DeleteMapping("/professional/{professionalId}")
+    public ResponseEntity<Void> delete(@PathVariable Long professionalId, @AuthenticationPrincipal User currentUser) {
+        professionalProfileService.delete(professionalId, currentUser);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/{id}/professional")
     public ResponseEntity<List<ProfessionalProfileResponseDto>> getProfessionalExById(@PathVariable Long id,
                                                                                       @AuthenticationPrincipal User currentUser) {
