@@ -7,6 +7,7 @@ import com.example.genealogie.model.Profile;
 import com.example.genealogie.service.ProfileService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,6 +28,9 @@ public abstract class ProfessionalProfileMapper {
     @Mapping(source = "dto.description", target = "description")
     @Mapping(target = "id", ignore = true)
     public abstract ProfessionalProfile toEntity(ProfessionalProfileRequestDto dto, Long profileId);
+
+    @Mapping(target = "id", ignore = true)
+    public abstract ProfessionalProfile update(@MappingTarget ProfessionalProfile target, ProfessionalProfile source);
 
     @Named("getProfileById")
     protected Profile getProfileById(Long profileId) {

@@ -9,4 +9,5 @@ public interface ProfessionalProfileService {
     ProfessionalProfile getById(Long id, User user);
     ProfessionalProfile create(ProfessionalProfile professionalProfile, User user);
     List<ProfessionalProfile> getAllByProfileId(Long id, User user);
+    ProfessionalProfile update(ProfessionalProfile professionalProfile, User user);
 }
