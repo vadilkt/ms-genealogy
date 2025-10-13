@@ -10,4 +10,5 @@ public interface ProfessionalProfileService {
     ProfessionalProfile create(ProfessionalProfile professionalProfile, User user);
     List<ProfessionalProfile> getAllByProfileId(Long id, User user);
     ProfessionalProfile update(ProfessionalProfile professionalProfile, User user);
+    void delete(Long profileId, User user);
 }
