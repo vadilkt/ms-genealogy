@@ -43,6 +43,12 @@ public class ProfessionalProfileServiceImpl implements ProfessionalProfileServic
         return professionalProfileRepository.findAllByProfile_Id(id, DEFAULT_SORT);
     }
 
+    @Override
+    public ProfessionalProfile update(ProfessionalProfile professionalProfile, User user) {
+        validateAccess(professionalProfile.getProfile(), user);
+        return professionalProfileRepository.save(professionalProfile);
+    }
+
     private boolean isCurrentUser(Profile profile, User currentUser){
         if(currentUser.getRole() == UserRole.ADMIN) return true;
 

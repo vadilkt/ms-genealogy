@@ -92,6 +92,17 @@ public class ProfileController {
         return ResponseEntity.ok().body(professionalProfileMapper.toDto(professionalProfile));
     }
 
+    @PutMapping("/professional/{professionalId}")
+    public ResponseEntity<ProfessionalProfileResponseDto> update(@PathVariable Long professionalId,
+                                                                 @RequestBody ProfessionalProfileRequestDto requestDto,
+                                                                 @AuthenticationPrincipal User currentUser) {
+        ProfessionalProfile existingProfessional = professionalProfileService.getById(professionalId, currentUser);
+        ProfessionalProfile newProfessionalData = professionalProfileMapper.toEntity(requestDto, existingProfessional.getProfile().getId());
+        professionalProfileMapper.update(existingProfessional, newProfessionalData);
+
+        return ResponseEntity.ok(professionalProfileMapper.toDto(professionalProfileService.update(existingProfessional, currentUser)));
+    }
+
     @GetMapping("/{id}/professional")
     public ResponseEntity<List<ProfessionalProfileResponseDto>> getProfessionalExById(@PathVariable Long id,
                                                                                       @AuthenticationPrincipal User currentUser) {
