@@ -76,9 +76,18 @@ public class ProfileController {
 
     @PostMapping("/{id}/professional")
     public ResponseEntity<ProfessionalProfileResponseDto> createProfessionalProfil(@PathVariable Long id,
-                                                                                   @RequestBody ProfessionalProfileRequestDto requestDto) {
+                                                                                   @RequestBody ProfessionalProfileRequestDto requestDto,
+                                                                                   @AuthenticationPrincipal User currentUser) {
         ProfessionalProfile professionalProfile = professionalProfileMapper.toEntity(requestDto, id);
-        professionalProfileService.create(professionalProfile);
+        professionalProfileService.create(professionalProfile, currentUser);
+
+        return ResponseEntity.ok().body(professionalProfileMapper.toDto(professionalProfile));
+    }
+
+    @GetMapping("/professional/{professionalId}")
+    public ResponseEntity<ProfessionalProfileResponseDto> getProfessionalProfil(@PathVariable Long professionalId,
+                                                                                @AuthenticationPrincipal User currentUser) {
+        ProfessionalProfile professionalProfile = professionalProfileService.getById(professionalId, currentUser);
 
         return ResponseEntity.ok().body(professionalProfileMapper.toDto(professionalProfile));
     }
