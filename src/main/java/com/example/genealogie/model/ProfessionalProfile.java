@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldNameConstants;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.ZonedDateTime;
@@ -16,6 +17,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@FieldNameConstants
 @Table(name = "professional_profile")
 public class ProfessionalProfile {
 
