@@ -1,5 +1,6 @@
 package com.example.genealogie.mapper;
 
+import com.example.genealogie.dto.AcademicProfileResponseDto;
 import com.example.genealogie.dto.ProfileRequestDto;
 import com.example.genealogie.dto.ProfileResponseDto;
 import com.example.genealogie.dto.ProfessionalProfileResponseDto;
@@ -19,7 +20,6 @@ import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class ProfileMapper {
@@ -29,6 +29,9 @@ public abstract class ProfileMapper {
 
     @Autowired
     private ProfessionalProfileMapper professionalProfileMapper;
+
+    @Autowired
+    private AcademicProfileMapper academicProfileMapper;
 
     public ProfileResponseDto toDto(Profile profile) {
         if (profile == null) {
@@ -52,9 +55,18 @@ public abstract class ProfileMapper {
                         : profile.getProfessionalProfiles()
                         .stream()
                         .map(professionalProfileMapper::toDto)
-                        .collect(Collectors.toList());
+                        .toList();
 
         dto.setProfessionalRecords(professionalDtos);
+
+        List<AcademicProfileResponseDto> academicProfileResponseDtos =
+                profile.getAcademicProfiles() == null
+                ? Collections.emptyList()
+                : profile.getAcademicProfiles().stream()
+                        .map(academicProfileMapper::toDto)
+                        .toList();
+
+        dto.setAcademicRecords(academicProfileResponseDtos);
 
         return dto;
     }

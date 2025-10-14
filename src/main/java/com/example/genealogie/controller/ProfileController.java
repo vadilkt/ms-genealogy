@@ -1,14 +1,14 @@
 package com.example.genealogie.controller;
 
-import com.example.genealogie.dto.ProfessionalProfileRequestDto;
-import com.example.genealogie.dto.ProfessionalProfileResponseDto;
-import com.example.genealogie.dto.ProfileRequestDto;
-import com.example.genealogie.dto.ProfileResponseDto;
+import com.example.genealogie.dto.*;
+import com.example.genealogie.mapper.AcademicProfileMapper;
 import com.example.genealogie.mapper.ProfessionalProfileMapper;
 import com.example.genealogie.mapper.ProfileMapper;
+import com.example.genealogie.model.AcademicProfile;
 import com.example.genealogie.model.ProfessionalProfile;
 import com.example.genealogie.model.Profile;
 import com.example.genealogie.model.User;
+import com.example.genealogie.service.AcademicProfileService;
 import com.example.genealogie.service.ProfessionalProfileService;
 import com.example.genealogie.service.ProfileService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +27,8 @@ public class ProfileController {
     private final ProfessionalProfileMapper professionalProfileMapper;
     private final ProfessionalProfileService professionalProfileService;
     private final ProfileService profileService;
+    private final AcademicProfileMapper academicProfileMapper;
+    private final AcademicProfileService academicProfileService;
 
     @PostMapping("/{userId}")
     public ResponseEntity<ProfileResponseDto> createProfile(@RequestBody ProfileRequestDto requestDto,
@@ -119,6 +121,16 @@ public class ProfileController {
                 .toList();
 
         return ResponseEntity.ok().body(dtos);
+    }
+
+    @PostMapping("/{id}/academic")
+    public ResponseEntity<AcademicProfileResponseDto> createAcademic(@PathVariable Long id,
+                                                                     @RequestBody AcademicProfileRequestDto dto,
+                                                                     @AuthenticationPrincipal User currentUser) {
+        AcademicProfile academicProfile = academicProfileMapper.toEntity(dto, id);
+        academicProfileService.create(academicProfile, currentUser);
+
+        return ResponseEntity.ok().body(academicProfileMapper.toDto(academicProfile));
     }
 
 }

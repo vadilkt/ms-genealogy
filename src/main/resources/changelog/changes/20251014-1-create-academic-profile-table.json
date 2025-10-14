@@ -1,0 +1,90 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "2025-10-14-01",
+        "author": "Vadil K.",
+        "comment": "Create an academic_profile table with foreign key to profile",
+        "changes": [
+          {
+            "createTable": {
+              "tableName": "academic_profile",
+              "columns": [
+                {
+                  "column": {
+                    "name": "id",
+                    "type": "bigint",
+                    "autoIncrement": true,
+                    "constraints": {
+                      "primaryKey": true,
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "profile_id",
+                    "type": "bigint",
+                    "constraints": {
+                      "nullable": false,
+                      "foreignKeyName": "fk_academic_profile_profile",
+                      "references": "profile(id)"
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "institution",
+                    "type": "VARCHAR(255)",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "degree",
+                    "type": "VARCHAR(255)",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "field_of_study",
+                    "type": "VARCHAR(255)",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "start_date",
+                    "type": "TIMESTAMP WITH TIME ZONE",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "end_date",
+                    "type": "TIMESTAMP WITH TIME ZONE"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "grade",
+                    "type": "VARCHAR(50)"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
