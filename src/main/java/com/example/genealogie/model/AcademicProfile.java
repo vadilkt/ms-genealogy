@@ -14,8 +14,8 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 @FieldNameConstants
-@Table(name = "professional_profile")
-public class ProfessionalProfile {
+@Table(name = "academic_profile")
+public class AcademicProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,20 +28,22 @@ public class ProfessionalProfile {
     private Profile profile;
 
     @NonNull
-    private String profession;
+    private String institution;
 
     @NonNull
-    private String entreprise;
+    private String degree;
 
     @NonNull
-    private String ville;
+    private String fieldOfStudy;
 
     @NonNull
-    private ZonedDateTime dateDebut;
+    private ZonedDateTime startDate;
 
     @Nullable
-    private ZonedDateTime dateFin;
+    private ZonedDateTime endDate;
 
     @Nullable
-    private String description;
+    private String grade;
+
+
 }

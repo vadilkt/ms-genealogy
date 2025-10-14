@@ -43,6 +43,10 @@ public class Profile {
     @OneToMany(mappedBy = "profile")
     @JsonManagedReference
     private List<ProfessionalProfile> professionalProfiles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "profile")
+    @JsonManagedReference
+    private List<AcademicProfile> academicProfiles = new ArrayList<>();
 }
 
 

@@ -22,4 +22,5 @@ public class ProfileResponseDto {
     private Integer age;
     private String residence;
     private List<ProfessionalProfileResponseDto> professionalRecords;
+    private List<AcademicProfileResponseDto> academicRecords;
 }
