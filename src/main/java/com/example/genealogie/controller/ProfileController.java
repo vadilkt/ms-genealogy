@@ -133,4 +133,23 @@ public class ProfileController {
         return ResponseEntity.ok().body(academicProfileMapper.toDto(academicProfile));
     }
 
+    @PutMapping("/academic/{id}")
+    public ResponseEntity<AcademicProfileResponseDto> updateAcademic(@PathVariable Long id,
+                                                                     @RequestBody AcademicProfileRequestDto dto,
+                                                                     @AuthenticationPrincipal User currentUser) {
+        AcademicProfile existingAcademicProfile = academicProfileService.getById(id, currentUser);
+        AcademicProfile newAcademicProfile = academicProfileMapper.toEntity(dto, existingAcademicProfile.getProfile().getId());
+        academicProfileMapper.update(existingAcademicProfile, newAcademicProfile);
+
+        return ResponseEntity.ok().body(academicProfileMapper.toDto(academicProfileService.update(existingAcademicProfile, currentUser)));
+    }
+
+    @GetMapping("/academic/{id}")
+    public ResponseEntity<AcademicProfileResponseDto> getAcademic(@PathVariable Long id,
+                                                                  @AuthenticationPrincipal User currentUser) {
+        AcademicProfile academicProfile = academicProfileService.getById(id, currentUser);
+
+        return ResponseEntity.ok().body(academicProfileMapper.toDto(academicProfile));
+    }
+
 }

@@ -6,6 +6,7 @@ import com.example.genealogie.model.User;
 import com.example.genealogie.model.UserRole;
 import com.example.genealogie.repository.AcademicProfileRepository;
 import com.example.genealogie.service.AcademicProfileService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,22 @@ public class AcademicProfileServiceImpl implements AcademicProfileService {
     public AcademicProfile create(AcademicProfile academicProfile, User user) {
         validateAccess(academicProfile.getProfile(), user);
         return academicProfileRepository.save(academicProfile);
+    }
+
+    @Override
+    public AcademicProfile update(AcademicProfile academicProfile, User user) {
+        validateAccess(academicProfile.getProfile(), user);
+        return academicProfileRepository.save(academicProfile);
+    }
+
+    @Override
+    public AcademicProfile getById(Long id, User user) {
+        AcademicProfile academicProfile = academicProfileRepository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException(String.format("Academic profile with id %s not found", id)));
+
+        validateAccess(academicProfile.getProfile(), user);
+
+        return academicProfile;
     }
 
     private boolean isCurrentUser(Profile profile, User currentUser){
