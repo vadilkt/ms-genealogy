@@ -50,6 +50,13 @@ public class AcademicProfileServiceImpl implements AcademicProfileService {
         return academicProfileRepository.findAllByProfile_Id(id, DEFAULT_SORT);
     }
 
+    @Override
+    public void delete(Long profileId, User user) {
+        validateAccess(profileService.getProfileById(profileId), user);
+        AcademicProfile academicProfile = getById(profileId, user);
+        academicProfileRepository.delete(academicProfile);
+    }
+
     private boolean isCurrentUser(Profile profile, User currentUser){
         if(currentUser.getRole() == UserRole.ADMIN) return true;
 

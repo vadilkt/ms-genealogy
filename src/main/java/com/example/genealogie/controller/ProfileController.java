@@ -164,4 +164,11 @@ public class ProfileController {
         return ResponseEntity.ok().body(academicProfileMapper.toDto(academicProfile));
     }
 
+    @DeleteMapping("/academic/{id}")
+    public ResponseEntity<Void> deleteAcademic(@PathVariable Long id,
+                                               @AuthenticationPrincipal User currentUser) {
+        academicProfileService.delete(id, currentUser);
+        return ResponseEntity.noContent().build();
+    }
+
 }
