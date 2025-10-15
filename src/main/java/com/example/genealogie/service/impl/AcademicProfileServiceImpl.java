@@ -6,15 +6,21 @@ import com.example.genealogie.model.User;
 import com.example.genealogie.model.UserRole;
 import com.example.genealogie.repository.AcademicProfileRepository;
 import com.example.genealogie.service.AcademicProfileService;
+import com.example.genealogie.service.ProfileService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AcademicProfileServiceImpl implements AcademicProfileService {
 
+    private final ProfileService profileService;
     private final AcademicProfileRepository academicProfileRepository;
+    private final Sort DEFAULT_SORT = Sort.by(Sort.Order.asc(AcademicProfile.Fields.startDate));
 
     @Override
     public AcademicProfile create(AcademicProfile academicProfile, User user) {
@@ -36,6 +42,12 @@ public class AcademicProfileServiceImpl implements AcademicProfileService {
         validateAccess(academicProfile.getProfile(), user);
 
         return academicProfile;
+    }
+
+    @Override
+    public List<AcademicProfile> getAcademicExpByProfileId(Long id, User user) {
+        validateAccess(profileService.getProfileById(id), user);
+        return academicProfileRepository.findAllByProfile_Id(id, DEFAULT_SORT);
     }
 
     private boolean isCurrentUser(Profile profile, User currentUser){

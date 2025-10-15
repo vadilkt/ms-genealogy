@@ -123,6 +123,18 @@ public class ProfileController {
         return ResponseEntity.ok().body(dtos);
     }
 
+    @GetMapping("/{id}/academic")
+    public ResponseEntity<List<AcademicProfileResponseDto>> getAcademicExByProfileId(@PathVariable Long id,
+                                                                                     @AuthenticationPrincipal User currentUser) {
+        List<AcademicProfile> academicProfiles = academicProfileService.getAcademicExpByProfileId(id, currentUser);
+
+        List<AcademicProfileResponseDto> dtos = academicProfiles.stream()
+                .map(academicProfileMapper::toDto)
+                .toList();
+
+        return ResponseEntity.ok().body(dtos);
+    }
+
     @PostMapping("/{id}/academic")
     public ResponseEntity<AcademicProfileResponseDto> createAcademic(@PathVariable Long id,
                                                                      @RequestBody AcademicProfileRequestDto dto,
