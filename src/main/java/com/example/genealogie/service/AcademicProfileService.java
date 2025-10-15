@@ -10,4 +10,5 @@ public interface AcademicProfileService {
     AcademicProfile update(AcademicProfile academicProfile, User user);
     AcademicProfile getById(Long id, User user);
     List<AcademicProfile> getAcademicExpByProfileId(Long id, User user);
+    void delete(Long profileId, User user);
 }
