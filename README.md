@@ -1,4 +1,4 @@
-# 🧬 GeneaLink – Application de Généalogie
+# 🧬 ms-genealogy – Application de Généalogie
 
 > Une application moderne permettant de **créer, visualiser et partager son arbre généalogique** de manière intuitive et collaborative.
 
@@ -6,7 +6,7 @@
 
 ## 🌿 Description
 
-**GeneaLink** est une application de généalogie conçue pour aider les utilisateurs à :
+**ms-genealogy** est une application de généalogie conçue pour aider les utilisateurs à :
 - Créer et gérer leurs **arbres généalogiques**
 - Ajouter des **membres de la famille** (liens de parenté, dates, lieux, photos, etc.)
 - Visualiser la **structure familiale** sous forme d’arbre ou de graphe
@@ -32,10 +32,9 @@ L’application combine **simplicité**, **visualisation claire** et **partage c
 Le projet suit une architecture **backend** claire et modulaire :
 
 ```
-genealink/
-├── backend/               # API Spring Boot
+ms-genealogy/             # API Spring Boot
 │   ├── src/
-│   │   ├── main/java/com/genealink/
+│   │   ├── main/java/com/ms-genealogy/
 │   │   │   ├── controller/
 │   │   │   ├── service/
 │   │   │   ├── repository/
@@ -43,6 +42,7 @@ genealink/
 │   │   │   └── config/
 │   │   │   └── dto/
 │   │   └── resources/
+            └── changelog/
 │   └── pom.xml
 │
 └── README.md
@@ -56,13 +56,12 @@ genealink/
 
 | Catégorie | Technologie |
 |------------|-------------|
-| Frontend | Next.js, React.js, TypeScript |
 | Backend | Spring Boot (Java 17+) |
 | Base de données | PostgreSQL |
 | Mapping | MapStruct |
 | Sécurité | Spring Security + JWT |
 | Communication API | REST |
-| Hébergement | Vercel (frontend) / Render, AWS ou Railway (backend) |
+| Hébergement, AWS ou Heroku (backend) |
 
 ---
 
@@ -70,8 +69,8 @@ genealink/
 
 ### 🔹 1. Cloner le projet
 ```bash
-git clone https://github.com/ton-utilisateur/genealink.git
-cd genealink
+git clone https://github.com/ton-utilisateur/ms-genealogy.git
+cd ms-genealogy
 ```
 
 ---
@@ -85,7 +84,7 @@ cd genealink
 
 2. Configurer la base de données PostgreSQL dans `src/main/resources/application.properties` :
    ```properties
-   spring.datasource.url=jdbc:postgresql://localhost:5432/genealink_db
+   spring.datasource.url=jdbc:postgresql://localhost:5432/ms-genealogy_db
    spring.datasource.username=postgres
    spring.datasource.password=ton_mot_de_passe
    spring.jpa.hibernate.ddl-auto=none
