@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 @Slf4j
 @RestController
@@ -27,48 +28,51 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<?> register(@RequestBody @Valid UserRequestDto userRequestDto) {
         try {
-            log.info("Registering user: {}", userRequestDto.getUsername());
+            log.info("Inscription de l'utilisateur : {}", userRequestDto.getUsername());
             userService.createUser(userRequestDto);
             return ResponseEntity.ok("Utilisateur créé");
         } catch (Exception e) {
-            log.error("Registration failed: {}", e.getMessage());
+            log.error("Échec de l'inscription : {}", e.getMessage());
             return ResponseEntity.badRequest().body("Erreur: " + e.getMessage());
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<?> login(@RequestBody @Valid AuthenticationRequest request) {
         try {
-            log.info("Login attempt for username: {}", request.getUsername());
+            log.info("Tentative de connexion pour l'utilisateur : {}", request.getUsername());
 
             // Vérifier si l'utilisateur existe
             try {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
-                log.info("User found in database: {}", userDetails.getUsername());
+                log.info("Utilisateur trouvé dans la base de données : {}", userDetails.getUsername());
             } catch (Exception e) {
-                log.error("User not found in database: {}", request.getUsername());
+                log.error("Utilisateur introuvable dans la base de données : {}", request.getUsername());
                 return ResponseEntity.status(401).body("Utilisateur non trouvé");
             }
 
             // Tenter l'authentification
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
-            );
+                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
-            log.info("Authentication successful for: {}", request.getUsername());
+            log.info("Authentification réussie pour : {}", request.getUsername());
 
             final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
             final String jwt = jwtUtil.generateToken(userDetails);
 
-            return ResponseEntity.ok(new AuthenticationResponse(jwt));
+            // Récupérer les détails de l'utilisateur pour la réponse
+            com.example.genealogie.model.User user = userService.getUserByUsername(request.getUsername());
+
+            return ResponseEntity.ok(new AuthenticationResponse(
+                    jwt, user.getId(), user.getUsername(), user.getEmail(), user.getRole().name()));
 
         } catch (BadCredentialsException e) {
-            log.error("Bad credentials for user: {}", request.getUsername());
+            log.error("Identifiants incorrects pour l'utilisateur : {}", request.getUsername());
             return ResponseEntity.status(401).body("Identifiants incorrects");
         } catch (Exception e) {
-            log.error("Login failed for user: {}, error: {}", request.getUsername(), e.getMessage());
+            log.error("Échec de connexion pour l'utilisateur : {}, erreur : {}", request.getUsername(), e.getMessage());
             return ResponseEntity.status(401).body("Erreur d'authentification");
         }
     }
