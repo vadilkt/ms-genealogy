@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProfileResponseDto {
     private Long id;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String gender;
@@ -21,6 +22,8 @@ public class ProfileResponseDto {
     private ZonedDateTime dateOfDeath;
     private Integer age;
     private String residence;
+    private PlaceDto birthPlace;
+    private PlaceDto deathPlace;
     private List<ProfessionalProfileResponseDto> professionalRecords;
     private List<AcademicProfileResponseDto> academicRecords;
 }

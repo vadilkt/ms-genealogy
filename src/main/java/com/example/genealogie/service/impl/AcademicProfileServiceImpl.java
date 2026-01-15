@@ -3,7 +3,6 @@ package com.example.genealogie.service.impl;
 import com.example.genealogie.model.AcademicProfile;
 import com.example.genealogie.model.Profile;
 import com.example.genealogie.model.User;
-import com.example.genealogie.model.UserRole;
 import com.example.genealogie.repository.AcademicProfileRepository;
 import com.example.genealogie.service.AcademicProfileService;
 import com.example.genealogie.service.ProfileService;
@@ -37,7 +36,9 @@ public class AcademicProfileServiceImpl implements AcademicProfileService {
     @Override
     public AcademicProfile getById(Long id, User user) {
         AcademicProfile academicProfile = academicProfileRepository.findById(id)
-                .orElseThrow(()-> new EntityNotFoundException(String.format("Academic profile with id %s not found", id)));
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                String.format("Profil académique avec l'id %s introuvable", id)));
 
         validateAccess(academicProfile.getProfile(), user);
 
@@ -51,21 +52,18 @@ public class AcademicProfileServiceImpl implements AcademicProfileService {
     }
 
     @Override
-    public void delete(Long profileId, User user) {
-        validateAccess(profileService.getProfileById(profileId), user);
-        AcademicProfile academicProfile = getById(profileId, user);
+    public void delete(Long academicProfileId, User user) {
+        AcademicProfile academicProfile = academicProfileRepository.findById(academicProfileId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        String.format("Profil académique avec l'id %s introuvable", academicProfileId)));
+        validateAccess(academicProfile.getProfile(), user);
         academicProfileRepository.delete(academicProfile);
     }
 
-    private boolean isCurrentUser(Profile profile, User currentUser){
-        if(currentUser.getRole() == UserRole.ADMIN) return true;
-
-        return profile.getUser().getId().equals(currentUser.getId());
-    }
-
-    private void validateAccess(Profile profile, User currentUser){
-        if(!isCurrentUser(profile, currentUser)) {
-            throw new SecurityException("You are not authorized to create a professional profile");
+    private void validateAccess(Profile profile, User currentUser) {
+        if (!profileService.isOwnerOrAdmin(profile, currentUser)) {
+            throw new org.springframework.security.access.AccessDeniedException(
+                    "Vous n'êtes pas autorisé à accéder ou à modifier les données académiques de ce profil");
         }
     }
 }
