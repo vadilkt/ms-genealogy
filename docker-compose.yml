@@ -16,10 +16,26 @@ services:
       - ./init-scripts:/docker-entrypoint-initdb.d
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      test: ["CMD-SHELL", "pg_isready -U ${USER_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: genealogie_app
+    ports:
+      - "8090:8090"
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/genealogie
+      USER_NAME: ${USER_NAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      CLIENT_JWT_SECRET: ${CLIENT_JWT_SECRET}
+      JWT_TOKEN_VALIDITY: ${JWT_TOKEN_VALIDITY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   postgres-data:
