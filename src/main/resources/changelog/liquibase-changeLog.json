@@ -1,7 +1,11 @@
 {
   "databaseChangeLog": [
-    {
-      "includeAll": {"path": "changelog/changes/"}
-    }
+    { "include": { "file": "changelog/changes/20251007-1-create-user-table.json" } },
+    { "include": { "file": "changelog/changes/20251007-2-create-profile-table.json" } },
+    { "include": { "file": "changelog/changes/20251012-1-create-professional-profile-table.json" } },
+    { "include": { "file": "changelog/changes/20251014-1-create-academic-profile-table.json" } },
+    { "include": { "file": "changelog/changes/20250204-1-add-family-links.json" } },
+    { "include": { "file": "changelog/changes/20250209-1-allow-multiple-profiles-per-user.json" } },
+    { "include": { "file": "changelog/changes/20250210-1-add-places.json" } }
   ]
 }
