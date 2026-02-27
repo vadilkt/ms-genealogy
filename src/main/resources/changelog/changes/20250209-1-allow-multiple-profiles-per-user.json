@@ -1,0 +1,19 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "2025-02-09-01",
+        "author": "Vadil K.",
+        "comment": "Allow multiple profiles per user (e.g. admin can create several profiles). Drop unique on profile.user_id.",
+        "changes": [
+          {
+            "dropUniqueConstraint": {
+              "tableName": "profile",
+              "constraintName": "profile_user_id_key"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
