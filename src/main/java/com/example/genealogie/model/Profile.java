@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.lang.Nullable;
 
 import java.time.ZonedDateTime;
@@ -24,9 +24,8 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id", unique = true, nullable=false)
-    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable=true)
     private User user;
     @NotNull
     private String firstName;
@@ -39,6 +38,32 @@ public class Profile {
     private ZonedDateTime dateOfDeath;
     @NotNull
     private String residence;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "birth_place_id")
+    private Place birthPlace;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "death_place_id")
+    private Place deathPlace;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "father_id")
+    private Profile father;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mother_id")
+    private Profile mother;
+
+    /** Mariages où ce profil est le mari (un homme peut avoir plusieurs épouses). */
+    @OneToMany(mappedBy = "husband", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("husband-marriages")
+    private List<Marriage> marriagesAsHusband = new ArrayList<>();
+
+    /** Mariage où ce profil est l'épouse (une femme n'a qu'un seul mari). */
+    @OneToOne(mappedBy = "wife", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("wife-marriage")
+    private Marriage marriageAsWife;
 
     @OneToMany(mappedBy = "profile")
     @JsonManagedReference
