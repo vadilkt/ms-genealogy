@@ -33,8 +33,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
     private static final List<String> PUBLIC_ENDPOINTS = Arrays.asList(
-            "/api/auth/**"
-    );
+            "/api/auth/**");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -48,15 +47,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         if (isPublicEndpoint(requestPath)) {
-            logger.debug("Public endpoint accessed: {}", requestPath);
+            logger.debug("Accès à un point de terminaison public : {}", requestPath);
             chain.doFilter(request, response);
             return;
         }
 
         final String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            logger.debug("No JWT token found in request headers for protected endpoint: {}", requestPath);
-            unauthorized(response, "Missing or invalid Authorization header");
+            logger.debug(
+                    "Aucun jeton JWT trouvé dans les en-têtes de la requête pour le point de terminaison protégé : {}",
+                    requestPath);
+            unauthorized(response, "En-tête Authorization manquant ou invalide");
             return;
         }
 
@@ -67,30 +68,30 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         try {
             username = jwtUtil.extractUsername(jwt);
         } catch (ExpiredJwtException eje) {
-            logger.warn("Expired JWT token for request {}: {}", requestPath, eje.getMessage());
-            unauthorized(response, "Token expired");
+            logger.warn("Jeton JWT expiré pour la requête {} : {}", requestPath, eje.getMessage());
+            unauthorized(response, "Jeton expiré");
             return;
         } catch (JwtException je) {
-            logger.error("Invalid JWT token for request {}: {}", requestPath, je.getMessage());
-            unauthorized(response, "Invalid token");
+            logger.error("Jeton JWT invalide pour la requête {} : {}", requestPath, je.getMessage());
+            unauthorized(response, "Jeton invalide");
             return;
         } catch (Exception e) {
-            logger.error("Failed to parse JWT for request {}: {}", requestPath, e.getMessage());
-            unauthorized(response, "Invalid token");
+            logger.error("Échec de l'analyse du JWT pour la requête {} : {}", requestPath, e.getMessage());
+            unauthorized(response, "Jeton invalide");
             return;
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
             if (jwtUtil.validateToken(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authenticationToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                logger.info("Authenticated user: {}", username);
+                logger.info("Utilisateur authentifié : {}", username);
             } else {
-                logger.warn("JWT token validation failed for user: {}", username);
-                unauthorized(response, "Invalid token");
+                logger.warn("Échec de la validation du jeton JWT pour l'utilisateur : {}", username);
+                unauthorized(response, "Jeton invalide");
                 return;
             }
         }
