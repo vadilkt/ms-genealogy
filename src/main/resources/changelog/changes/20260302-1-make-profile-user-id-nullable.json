@@ -1,0 +1,20 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "2026-03-02-01",
+        "author": "Vadil K.",
+        "comment": "Allow profile.user_id to be null (admin can create unlinked profiles).",
+        "changes": [
+          {
+            "dropNotNullConstraint": {
+              "tableName": "profile",
+              "columnName": "user_id",
+              "columnDataType": "bigint"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
