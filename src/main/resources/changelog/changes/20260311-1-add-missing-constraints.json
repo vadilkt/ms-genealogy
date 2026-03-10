@@ -1,0 +1,52 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "2026-03-11-01",
+        "author": "Vadil K.",
+        "comment": "Add unique constraint on users.username",
+        "changes": [
+          {
+            "addUniqueConstraint": {
+              "tableName": "users",
+              "columnNames": "username",
+              "constraintName": "uq_users_username"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "2026-03-11-02",
+        "author": "Vadil K.",
+        "comment": "Add unique constraint on users.email",
+        "changes": [
+          {
+            "addUniqueConstraint": {
+              "tableName": "users",
+              "columnNames": "email",
+              "constraintName": "uq_users_email"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "2026-03-11-03",
+        "author": "Vadil K.",
+        "comment": "Add composite unique constraint on marriage(husband_id, wife_id)",
+        "changes": [
+          {
+            "addUniqueConstraint": {
+              "tableName": "marriage",
+              "columnNames": "husband_id, wife_id",
+              "constraintName": "uq_marriage_husband_wife"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
