@@ -48,6 +48,14 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.toUser(userRequestDto);
         user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
+        user.setRole(com.example.genealogie.model.UserRole.USER);
         return userRepository.save(user);
+    }
+
+    @Override
+    public void changePassword(Long userId, String newPassword) {
+        User user = getUserById(userId);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 }

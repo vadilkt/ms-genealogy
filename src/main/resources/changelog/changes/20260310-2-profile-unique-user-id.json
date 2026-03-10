@@ -1,0 +1,18 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "2026-03-10-02",
+        "author": "Vadil K.",
+        "comment": "Re-add partial unique constraint on profile.user_id (1 profile per user, NULLs allowed for unlinked profiles).",
+        "changes": [
+          {
+            "sql": {
+              "sql": "CREATE UNIQUE INDEX ux_profile_user_id ON profile(user_id) WHERE user_id IS NOT NULL;"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

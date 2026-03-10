@@ -1,5 +1,6 @@
 package com.example.genealogie.service;
 
+import com.example.genealogie.dto.ProfileNodeDto;
 import com.example.genealogie.model.Profile;
 import com.example.genealogie.model.User;
 
@@ -22,4 +23,10 @@ public interface ProfileService {
     Optional<Profile> getProfileByUserId(Long userId);
 
     Profile assignUser(Long profileId, Long userId);
+
+    Profile createEmpty(User user);
+
+    List<Profile> getOrphanProfiles();
+
+    List<ProfileNodeDto> getFamilyGraph();
 }

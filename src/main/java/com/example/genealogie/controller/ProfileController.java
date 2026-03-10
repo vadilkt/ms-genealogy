@@ -59,6 +59,24 @@ public class ProfileController {
         return ResponseEntity.ok(profileMapper.toDto(profile, currentUser));
     }
 
+    @GetMapping("/family-graph")
+    public ResponseEntity<List<com.example.genealogie.dto.ProfileNodeDto>> getFamilyGraph(
+            @AuthenticationPrincipal User currentUser) {
+        return ResponseEntity.ok(profileService.getFamilyGraph());
+    }
+
+    @GetMapping("/orphans")
+    public ResponseEntity<List<ProfileResponseDto>> getOrphanProfiles(@AuthenticationPrincipal User currentUser) {
+        if (currentUser.getRole() != UserRole.ADMIN) {
+            return ResponseEntity.status(403).build();
+        }
+        List<ProfileResponseDto> dtos = profileService.getOrphanProfiles()
+                .stream()
+                .map(p -> profileMapper.toDto(p, currentUser))
+                .toList();
+        return ResponseEntity.ok(dtos);
+    }
+
     @GetMapping("/me")
     public ResponseEntity<ProfileResponseDto> getMyProfile(@AuthenticationPrincipal User currentUser) {
         return profileService.getProfileByUserId(currentUser.getId())

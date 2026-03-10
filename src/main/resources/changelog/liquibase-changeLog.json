@@ -7,6 +7,10 @@
     { "include": { "file": "changelog/changes/20250204-1-add-family-links.json" } },
     { "include": { "file": "changelog/changes/20250209-1-allow-multiple-profiles-per-user.json" } },
     { "include": { "file": "changelog/changes/20250210-1-add-places.json" } },
-    { "include": { "file": "changelog/changes/20260302-1-make-profile-user-id-nullable.json" } }
+    { "include": { "file": "changelog/changes/20260302-1-make-profile-user-id-nullable.json" } },
+    { "include": { "file": "changelog/changes/20260310-1-profile-fields-nullable.json" } },
+    { "include": { "file": "changelog/changes/20260310-2-profile-unique-user-id.json" } },
+    { "include": { "file": "changelog/changes/20260310-3-profile-audit-timestamps.json" } },
+    { "include": { "file": "changelog/changes/20260310-4-create-notification-table.json" } }
   ]
 }

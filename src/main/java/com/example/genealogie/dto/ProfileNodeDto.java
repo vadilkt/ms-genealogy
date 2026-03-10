@@ -6,26 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 
+/**
+ * Représentation légère d'un profil pour la construction de l'arbre global.
+ * Contient uniquement les champs nécessaires au rendu et au calcul de position.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfileResponseDto {
+public class ProfileNodeDto {
     private Long id;
-    private Long userId;
     private String firstName;
     private String lastName;
     private String gender;
     private ZonedDateTime dateOfBirth;
     private ZonedDateTime dateOfDeath;
-    private Integer age;
-    private String residence;
-    private PlaceDto birthPlace;
-    private PlaceDto deathPlace;
-    private List<ProfessionalProfileResponseDto> professionalRecords;
-    private List<AcademicProfileResponseDto> academicRecords;
-    private ZonedDateTime createdAt;
-    private ZonedDateTime updatedAt;
+    private Long fatherId;
+    private Long motherId;
 }

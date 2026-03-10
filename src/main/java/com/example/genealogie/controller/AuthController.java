@@ -4,6 +4,8 @@ import com.example.genealogie.config.JwtUtil;
 import com.example.genealogie.dto.AuthenticationRequest;
 import com.example.genealogie.dto.AuthenticationResponse;
 import com.example.genealogie.dto.UserRequestDto;
+import com.example.genealogie.model.User;
+import com.example.genealogie.service.ProfileService;
 import com.example.genealogie.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,17 +28,14 @@ public class AuthController {
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
     private final UserService userService;
+    private final ProfileService profileService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid UserRequestDto userRequestDto) {
-        try {
-            log.info("Inscription de l'utilisateur : {}", userRequestDto.getUsername());
-            userService.createUser(userRequestDto);
-            return ResponseEntity.ok("Utilisateur créé");
-        } catch (Exception e) {
-            log.error("Échec de l'inscription : {}", e.getMessage());
-            return ResponseEntity.badRequest().body("Erreur: " + e.getMessage());
-        }
+        log.info("Inscription de l'utilisateur : {}", userRequestDto.getUsername());
+        User newUser = userService.createUser(userRequestDto);
+        profileService.createEmpty(newUser);
+        return ResponseEntity.ok("Utilisateur créé");
     }
 
     @PostMapping("/login")

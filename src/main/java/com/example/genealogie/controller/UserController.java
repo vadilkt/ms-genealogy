@@ -1,15 +1,15 @@
 package com.example.genealogie.controller;
 
+import com.example.genealogie.dto.ChangePasswordRequestDto;
 import com.example.genealogie.dto.UserDto;
 import com.example.genealogie.model.User;
 import com.example.genealogie.model.UserRole;
 import com.example.genealogie.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +29,16 @@ public class UserController {
                 .map(u -> new UserDto(u.getId(), u.getUsername(), u.getEmail(), u.getRole().name()))
                 .toList();
         return ResponseEntity.ok(users);
+    }
+
+    @PutMapping("/{id}/password")
+    public ResponseEntity<Void> changePassword(@PathVariable Long id,
+            @RequestBody @Valid ChangePasswordRequestDto requestDto,
+            @AuthenticationPrincipal User currentUser) {
+        if (currentUser.getRole() != UserRole.ADMIN) {
+            return ResponseEntity.status(403).build();
+        }
+        userService.changePassword(id, requestDto.getNewPassword());
+        return ResponseEntity.noContent().build();
     }
 }

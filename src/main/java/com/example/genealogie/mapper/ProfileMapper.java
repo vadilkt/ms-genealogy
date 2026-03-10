@@ -63,6 +63,8 @@ public abstract class ProfileMapper {
         dto.setAge(computeAge(profile.getDateOfBirth(), profile.getDateOfDeath()));
         dto.setBirthPlace(placeMapper.toDto(profile.getBirthPlace()));
         dto.setDeathPlace(placeMapper.toDto(profile.getDeathPlace()));
+        dto.setCreatedAt(profile.getCreatedAt());
+        dto.setUpdatedAt(profile.getUpdatedAt());
 
         if (currentUser != null && profileService.isOwnerOrAdmin(profile, currentUser)) {
             List<ProfessionalProfileResponseDto> professionalDtos = profile.getProfessionalProfiles() == null
@@ -109,6 +111,8 @@ public abstract class ProfileMapper {
         dto.setAge(computeAge(profile.getDateOfBirth(), profile.getDateOfDeath()));
         dto.setBirthPlace(placeMapper.toDto(profile.getBirthPlace()));
         dto.setDeathPlace(placeMapper.toDto(profile.getDeathPlace()));
+        dto.setCreatedAt(profile.getCreatedAt());
+        dto.setUpdatedAt(profile.getUpdatedAt());
         dto.setProfessionalRecords(Collections.emptyList());
         dto.setAcademicRecords(Collections.emptyList());
         return dto;

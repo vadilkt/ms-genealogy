@@ -13,4 +13,6 @@ public interface UserService {
     User createUser(UserRequestDto userRequestDto);
 
     List<User> findAll();
+
+    void changePassword(Long userId, String newPassword);
 }

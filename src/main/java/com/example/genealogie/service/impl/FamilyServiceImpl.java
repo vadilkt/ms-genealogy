@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,11 +35,17 @@ public class FamilyServiceImpl implements FamilyService {
     @Override
     @Transactional
     public Profile setFather(Long profileId, Long fatherProfileId, User currentUser) {
+        if (profileId.equals(fatherProfileId)) {
+            throw new IllegalArgumentException("Un profil ne peut pas être son propre père.");
+        }
         Profile child = profileService.getProfileById(profileId);
         validateCanEdit(child, currentUser);
         Profile father = profileService.getProfileById(fatherProfileId);
         if (father.getGender() != Gender.MALE) {
             throw new IllegalArgumentException("Le père doit être de sexe masculin.");
+        }
+        if (isDescendant(profileId, fatherProfileId)) {
+            throw new IllegalArgumentException("Cycle détecté : ce profil est déjà un descendant du père proposé.");
         }
         child.setFather(father);
         return profileRepository.save(child);
@@ -46,11 +54,17 @@ public class FamilyServiceImpl implements FamilyService {
     @Override
     @Transactional
     public Profile setMother(Long profileId, Long motherProfileId, User currentUser) {
+        if (profileId.equals(motherProfileId)) {
+            throw new IllegalArgumentException("Un profil ne peut pas être sa propre mère.");
+        }
         Profile child = profileService.getProfileById(profileId);
         validateCanEdit(child, currentUser);
         Profile mother = profileService.getProfileById(motherProfileId);
         if (mother.getGender() != Gender.FEMALE) {
             throw new IllegalArgumentException("La mère doit être de sexe féminin.");
+        }
+        if (isDescendant(profileId, motherProfileId)) {
+            throw new IllegalArgumentException("Cycle détecté : ce profil est déjà un descendant de la mère proposée.");
         }
         child.setMother(mother);
         return profileRepository.save(child);
@@ -278,6 +292,28 @@ public class FamilyServiceImpl implements FamilyService {
                 .profile(profileMapper.toDtoSummary(profile))
                 .children(childNodes)
                 .build();
+    }
+
+    /**
+     * Vérifie si {@code candidateId} est un descendant de {@code rootId}.
+     * Utilisé pour détecter les cycles dans l'arbre généalogique.
+     */
+    private boolean isDescendant(Long rootId, Long candidateId) {
+        Set<Long> visited = new HashSet<>();
+        return hasDescendant(rootId, candidateId, visited);
+    }
+
+    private boolean hasDescendant(Long currentId, Long targetId, Set<Long> visited) {
+        if (!visited.add(currentId)) return false;
+        List<Profile> children = Stream.concat(
+                profileRepository.findByFather_Id(currentId).stream(),
+                profileRepository.findByMother_Id(currentId).stream()
+        ).toList();
+        for (Profile child : children) {
+            if (child.getId().equals(targetId)) return true;
+            if (hasDescendant(child.getId(), targetId, visited)) return true;
+        }
+        return false;
     }
 
     private void validateCanEdit(Profile profile, User currentUser) {

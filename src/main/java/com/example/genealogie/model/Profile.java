@@ -6,7 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.Nullable;
 
 import java.time.ZonedDateTime;
@@ -24,19 +25,23 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private ZonedDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private ZonedDateTime updatedAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable=true)
     private User user;
-    @NotNull
     private String firstName;
     private String lastName;
-    @NotNull
     private Gender gender;
-    @NotNull
     private ZonedDateTime dateOfBirth;
     @Nullable
     private ZonedDateTime dateOfDeath;
-    @NotNull
     private String residence;
 
     @ManyToOne(fetch = FetchType.LAZY)
