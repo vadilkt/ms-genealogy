@@ -6,7 +6,8 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 
-RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
+RUN sed -i 's/\r$//' mvnw && chmod +x mvnw
+RUN ./mvnw dependency:go-offline -B
 
 COPY src src
 RUN ./mvnw package -DskipTests -B
@@ -15,7 +16,6 @@ RUN ./mvnw package -DskipTests -B
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
-ARG JAR_FILE=target/*.jar
 COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8090

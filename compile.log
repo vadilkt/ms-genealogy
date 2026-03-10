@@ -1,0 +1,418 @@
+Apache Maven 3.9.9 (8e8579a9e76f7d015ee5ec7bfcdc97d260186937)
+Maven home: C:\Users\Vadil\.m2\wrapper\dists\apache-maven-3.9.9\977a63e90f436cd6ade95b4c0e10c20c
+Java version: 1.8.0_202, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jre1.8.0_202
+Default locale: fr_FR, platform encoding: Cp1252
+OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
+[DEBUG] Created new class realm maven.api
+[DEBUG] Importing foreign packages into class realm maven.api
+[DEBUG]   Imported: javax.annotation.* < plexus.core
+[DEBUG]   Imported: javax.annotation.security.* < plexus.core
+[DEBUG]   Imported: javax.inject.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.artifact < plexus.core
+[DEBUG]   Imported: org.apache.maven.classrealm < plexus.core
+[DEBUG]   Imported: org.apache.maven.cli < plexus.core
+[DEBUG]   Imported: org.apache.maven.configuration < plexus.core
+[DEBUG]   Imported: org.apache.maven.exception < plexus.core
+[DEBUG]   Imported: org.apache.maven.execution < plexus.core
+[DEBUG]   Imported: org.apache.maven.execution.scope < plexus.core
+[DEBUG]   Imported: org.apache.maven.graph < plexus.core
+[DEBUG]   Imported: org.apache.maven.lifecycle < plexus.core
+[DEBUG]   Imported: org.apache.maven.model < plexus.core
+[DEBUG]   Imported: org.apache.maven.monitor < plexus.core
+[DEBUG]   Imported: org.apache.maven.plugin < plexus.core
+[DEBUG]   Imported: org.apache.maven.profiles < plexus.core
+[DEBUG]   Imported: org.apache.maven.project < plexus.core
+[DEBUG]   Imported: org.apache.maven.reporting < plexus.core
+[DEBUG]   Imported: org.apache.maven.repository < plexus.core
+[DEBUG]   Imported: org.apache.maven.rtinfo < plexus.core
+[DEBUG]   Imported: org.apache.maven.settings < plexus.core
+[DEBUG]   Imported: org.apache.maven.toolchain < plexus.core
+[DEBUG]   Imported: org.apache.maven.usability < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.authentication < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.authorization < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.events < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.observers < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.proxy < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.repository < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.resource < plexus.core
+[DEBUG]   Imported: org.codehaus.classworlds < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.* < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.classworlds < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.component < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.configuration < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.container < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.context < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.lifecycle < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.logging < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.personality < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.Xpp3Dom < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.pull.XmlPullParser < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.pull.XmlPullParserException < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.pull.XmlSerializer < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.* < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.artifact < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.collection < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.deployment < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.graph < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.impl < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.installation < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.internal.impl < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.metadata < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.repository < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.resolution < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.spi < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.transfer < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.util < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.version < plexus.core
+[DEBUG]   Imported: org.fusesource.jansi.* < plexus.core
+[DEBUG]   Imported: org.slf4j.* < plexus.core
+[DEBUG]   Imported: org.slf4j.event.* < plexus.core
+[DEBUG]   Imported: org.slf4j.helpers.* < plexus.core
+[DEBUG]   Imported: org.slf4j.spi.* < plexus.core
+[DEBUG] Populating class realm maven.api
+[DEBUG] Created adapter factory; available factories [file-lock, rwlock-local, semaphore-local, noop]; available name mappers [discriminating, file-gav, file-hgav, file-static, gav, static]
+[INFO] Error stacktraces are turned on.
+[DEBUG] Message scheme: color
+[DEBUG] Message styles: debug info warning error success failure strong mojo project
+[DEBUG] Reading global settings from C:\Users\Vadil\.m2\wrapper\dists\apache-maven-3.9.9\977a63e90f436cd6ade95b4c0e10c20c\conf\settings.xml
+[DEBUG] Reading user settings from C:\Users\Vadil\.m2\settings.xml
+[DEBUG] Reading global toolchains from C:\Users\Vadil\.m2\wrapper\dists\apache-maven-3.9.9\977a63e90f436cd6ade95b4c0e10c20c\conf\toolchains.xml
+[DEBUG] Reading user toolchains from C:\Users\Vadil\.m2\toolchains.xml
+[DEBUG] Using local repository at C:\Users\Vadil\.m2\repository
+[DEBUG] Using manager EnhancedLocalRepositoryManager with priority 10.0 for C:\Users\Vadil\.m2\repository
+[INFO] Scanning for projects...
+[DEBUG] Creating adapter using nameMapper 'gav' and factory 'rwlock-local'
+[DEBUG] Dependency collection stats {ConflictMarker.analyzeTime=487500, ConflictMarker.markTime=227400, ConflictMarker.nodeCount=13, ConflictIdSorter.graphTime=249800, ConflictIdSorter.topsortTime=182900, ConflictIdSorter.conflictIdCount=11, ConflictIdSorter.conflictIdCycleCount=0, ConflictResolver.totalTime=2189100, ConflictResolver.conflictItemCount=13, DfDependencyCollector.collectTime=92938200, DfDependencyCollector.transformTime=5084200}
+[DEBUG] org.graalvm.buildtools:native-maven-plugin:jar:0.10.3
+[DEBUG]    org.graalvm.buildtools:utils:jar:0.10.3:runtime
+[DEBUG]    com.fasterxml.jackson.core:jackson-databind:jar:2.13.5:runtime
+[DEBUG]       com.fasterxml.jackson.core:jackson-annotations:jar:2.13.5:runtime
+[DEBUG]       com.fasterxml.jackson.core:jackson-core:jar:2.13.5:runtime
+[DEBUG]    org.graalvm.buildtools:graalvm-reachability-metadata:jar:0.10.3:runtime
+[DEBUG]    org.codehaus.plexus:plexus-utils:jar:4.0.0:runtime
+[DEBUG]    org.codehaus.plexus:plexus-xml:jar:4.0.2:runtime
+[DEBUG]       org.apache.maven:maven-xml-impl:jar:4.0.0-alpha-7:runtime
+[DEBUG]          org.apache.maven:maven-api-xml:jar:4.0.0-alpha-7:runtime
+[DEBUG]             org.apache.maven:maven-api-meta:jar:4.0.0-alpha-7:runtime
+[DEBUG] Created new class realm extension>org.graalvm.buildtools:native-maven-plugin:0.10.3
+[DEBUG] Importing foreign packages into class realm extension>org.graalvm.buildtools:native-maven-plugin:0.10.3
+[DEBUG]   Imported:  < maven.api
+[DEBUG] Populating class realm extension>org.graalvm.buildtools:native-maven-plugin:0.10.3
+[DEBUG]   Included: org.graalvm.buildtools:native-maven-plugin:jar:0.10.3
+[DEBUG]   Included: org.graalvm.buildtools:utils:jar:0.10.3
+[DEBUG]   Included: com.fasterxml.jackson.core:jackson-databind:jar:2.13.5
+[DEBUG]   Included: com.fasterxml.jackson.core:jackson-annotations:jar:2.13.5
+[DEBUG]   Included: com.fasterxml.jackson.core:jackson-core:jar:2.13.5
+[DEBUG]   Included: org.graalvm.buildtools:graalvm-reachability-metadata:jar:0.10.3
+[DEBUG]   Included: org.codehaus.plexus:plexus-utils:jar:4.0.0
+[DEBUG]   Included: org.codehaus.plexus:plexus-xml:jar:4.0.2
+[DEBUG]   Included: org.apache.maven:maven-xml-impl:jar:4.0.0-alpha-7
+[DEBUG]   Included: org.apache.maven:maven-api-xml:jar:4.0.0-alpha-7
+[DEBUG]   Included: org.apache.maven:maven-api-meta:jar:4.0.0-alpha-7
+[DEBUG] Extension realms for project com.example:genealogie:jar:0.0.1-SNAPSHOT: [ClassRealm[extension>org.graalvm.buildtools:native-maven-plugin:0.10.3, parent: sun.misc.Launcher$AppClassLoader@4e25154f]]
+[DEBUG] Created new class realm project>com.example:genealogie:0.0.1-SNAPSHOT
+[DEBUG] Populating class realm project>com.example:genealogie:0.0.1-SNAPSHOT
+[DEBUG] Looking up lifecycle mappings for packaging jar from ClassRealm[project>com.example:genealogie:0.0.1-SNAPSHOT, parent: ClassRealm[maven.api, parent: null]]
+[DEBUG] Extension realms for project org.springframework.boot:spring-boot-starter-parent:pom:3.3.4: (none)
+[DEBUG] Looking up lifecycle mappings for packaging pom from ClassRealm[plexus.core, parent: null]
+[DEBUG] Extension realms for project org.springframework.boot:spring-boot-dependencies:pom:3.3.4: (none)
+[DEBUG] Looking up lifecycle mappings for packaging pom from ClassRealm[plexus.core, parent: null]
+[WARNING] Error injecting: org.graalvm.buildtools.maven.NativeExtension
+java.lang.TypeNotPresentException: Type org.graalvm.buildtools.maven.NativeExtension not present
+    at org.eclipse.sisu.space.URLClassSpace.loadClass (URLClassSpace.java:149)
+    at org.eclipse.sisu.space.NamedClass.load (NamedClass.java:48)
+    at org.eclipse.sisu.space.AbstractDeferredClass.get (AbstractDeferredClass.java:50)
+    at com.google.inject.internal.ProviderInternalFactory.provision (ProviderInternalFactory.java:86)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision (InternalFactoryToInitializableAdapter.java:57)
+    at com.google.inject.internal.ProviderInternalFactory$1.call (ProviderInternalFactory.java:67)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:109)
+    at org.eclipse.sisu.bean.BeanScheduler$CycleActivator.onProvision (BeanScheduler.java:232)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:117)
+    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
+    at com.google.inject.internal.ProviderInternalFactory.circularGet (ProviderInternalFactory.java:62)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.get (InternalFactoryToInitializableAdapter.java:47)
+    at com.google.inject.internal.ProviderToInternalFactoryAdapter.get (ProviderToInternalFactoryAdapter.java:40)
+    at com.google.inject.internal.SingletonScope$1.get (SingletonScope.java:169)
+    at com.google.inject.internal.InternalFactoryToProviderAdapter.get (InternalFactoryToProviderAdapter.java:45)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1101)
+    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:83)
+    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:53)
+    at org.eclipse.sisu.wire.EntryListAdapter$ValueIterator.next (EntryListAdapter.java:113)
+    at java.util.AbstractCollection.addAll (Unknown Source)
+    at org.apache.maven.DefaultMaven.getProjectScopedExtensionComponents (DefaultMaven.java:358)
+    at org.apache.maven.DefaultMaven.getLifecycleParticipants (DefaultMaven.java:338)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:220)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
+    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
+    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:906)
+    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:283)
+    at org.apache.maven.cli.MavenCli.main (MavenCli.java:206)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0 (Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke (Unknown Source)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke (Unknown Source)
+    at java.lang.reflect.Method.invoke (Unknown Source)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:361)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
+Caused by: java.lang.UnsupportedClassVersionError: org/graalvm/buildtools/maven/NativeExtension has been compiled by a more recent version of the Java Runtime (class file version 55.0), this version of the Java Runtime only recognizes class file versions up to 52.0
+    at java.lang.ClassLoader.defineClass1 (Native Method)
+    at java.lang.ClassLoader.defineClass (Unknown Source)
+    at java.security.SecureClassLoader.defineClass (Unknown Source)
+    at java.net.URLClassLoader.defineClass (Unknown Source)
+    at java.net.URLClassLoader.access$100 (Unknown Source)
+    at java.net.URLClassLoader$1.run (Unknown Source)
+    at java.net.URLClassLoader$1.run (Unknown Source)
+    at java.security.AccessController.doPrivileged (Native Method)
+    at java.net.URLClassLoader.findClass (Unknown Source)
+    at org.codehaus.plexus.classworlds.realm.ClassRealm.findClassInternal (ClassRealm.java:256)
+    at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClassFromSelf (ClassRealm.java:351)
+    at org.codehaus.plexus.classworlds.strategy.SelfFirstStrategy.loadClass (SelfFirstStrategy.java:36)
+    at org.codehaus.plexus.classworlds.realm.ClassRealm.unsynchronizedLoadClass (ClassRealm.java:225)
+    at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass (ClassRealm.java:210)
+    at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass (ClassRealm.java:205)
+    at org.eclipse.sisu.space.URLClassSpace.loadClass (URLClassSpace.java:141)
+    at org.eclipse.sisu.space.NamedClass.load (NamedClass.java:48)
+    at org.eclipse.sisu.space.AbstractDeferredClass.get (AbstractDeferredClass.java:50)
+    at com.google.inject.internal.ProviderInternalFactory.provision (ProviderInternalFactory.java:86)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision (InternalFactoryToInitializableAdapter.java:57)
+    at com.google.inject.internal.ProviderInternalFactory$1.call (ProviderInternalFactory.java:67)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:109)
+    at org.eclipse.sisu.bean.BeanScheduler$CycleActivator.onProvision (BeanScheduler.java:232)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:117)
+    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
+    at com.google.inject.internal.ProviderInternalFactory.circularGet (ProviderInternalFactory.java:62)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.get (InternalFactoryToInitializableAdapter.java:47)
+    at com.google.inject.internal.ProviderToInternalFactoryAdapter.get (ProviderToInternalFactoryAdapter.java:40)
+    at com.google.inject.internal.SingletonScope$1.get (SingletonScope.java:169)
+    at com.google.inject.internal.InternalFactoryToProviderAdapter.get (InternalFactoryToProviderAdapter.java:45)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1101)
+    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:83)
+    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:53)
+    at org.eclipse.sisu.wire.EntryListAdapter$ValueIterator.next (EntryListAdapter.java:113)
+    at java.util.AbstractCollection.addAll (Unknown Source)
+    at org.apache.maven.DefaultMaven.getProjectScopedExtensionComponents (DefaultMaven.java:358)
+    at org.apache.maven.DefaultMaven.getLifecycleParticipants (DefaultMaven.java:338)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:220)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
+    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
+    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:906)
+    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:283)
+    at org.apache.maven.cli.MavenCli.main (MavenCli.java:206)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0 (Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke (Unknown Source)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke (Unknown Source)
+    at java.lang.reflect.Method.invoke (Unknown Source)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:361)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
+[ERROR] Internal error: com.google.inject.ProvisionException: Unable to provision, see the following errors:
+[ERROR] 
+[ERROR] 1) [Guice/ErrorInCustomProvider]: TypeNotPresentException: Type NativeExtension not present
+[ERROR]   at ClassRealm[extension>org.graalvm.buildtools:native-maven-plugin:0.10.3, parent: Launcher$AppClassLoader@4e25154f]
+[ERROR]       \_ installed by: WireModule -> PlexusBindingModule
+[ERROR]   while locating AbstractMavenLifecycleParticipant annotated with @Named(value=native-build-tools)
+[ERROR] 
+[ERROR] Learn more:
+[ERROR]   https://github.com/google/guice/wiki/ERROR_IN_CUSTOM_PROVIDER
+[ERROR] 
+[ERROR] 1 error
+[ERROR] 
+[ERROR] ======================
+[ERROR] Full classname legend:
+[ERROR] ======================
+[ERROR] AbstractMavenLifecycleParticipant: "org.apache.maven.AbstractMavenLifecycleParticipant"
+[ERROR] Launcher$AppClassLoader:           "sun.misc.Launcher$AppClassLoader"
+[ERROR] Named:                             "com.google.inject.name.Named"
+[ERROR] NativeExtension:                   "org.graalvm.buildtools.maven.NativeExtension"
+[ERROR] PlexusBindingModule:               "org.eclipse.sisu.plexus.PlexusBindingModule"
+[ERROR] WireModule:                        "org.eclipse.sisu.wire.WireModule"
+[ERROR] ========================
+[ERROR] End of classname legend:
+[ERROR] ========================: Type org.graalvm.buildtools.maven.NativeExtension not present: org/graalvm/buildtools/maven/NativeExtension has been compiled by a more recent version of the Java Runtime (class file version 55.0), this version of the Java Runtime only recognizes class file versions up to 52.0
+[ERROR] -> [Help 1]
+org.apache.maven.InternalErrorException: Internal error: com.google.inject.ProvisionException: Unable to provision, see the following errors:
+
+1) [Guice/ErrorInCustomProvider]: TypeNotPresentException: Type NativeExtension not present
+  at ClassRealm[extension>org.graalvm.buildtools:native-maven-plugin:0.10.3, parent: Launcher$AppClassLoader@4e25154f]
+      \_ installed by: WireModule -> PlexusBindingModule
+  while locating AbstractMavenLifecycleParticipant annotated with @Named(value=native-build-tools)
+
+Learn more:
+  https://github.com/google/guice/wiki/ERROR_IN_CUSTOM_PROVIDER
+
+1 error
+
+======================
+Full classname legend:
+======================
+AbstractMavenLifecycleParticipant: "org.apache.maven.AbstractMavenLifecycleParticipant"
+Launcher$AppClassLoader:           "sun.misc.Launcher$AppClassLoader"
+Named:                             "com.google.inject.name.Named"
+NativeExtension:                   "org.graalvm.buildtools.maven.NativeExtension"
+PlexusBindingModule:               "org.eclipse.sisu.plexus.PlexusBindingModule"
+WireModule:                        "org.eclipse.sisu.wire.WireModule"
+========================
+End of classname legend:
+========================
+
+    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:109)
+    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:906)
+    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:283)
+    at org.apache.maven.cli.MavenCli.main (MavenCli.java:206)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0 (Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke (Unknown Source)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke (Unknown Source)
+    at java.lang.reflect.Method.invoke (Unknown Source)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:361)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
+Caused by: com.google.inject.ProvisionException: Unable to provision, see the following errors:
+
+1) [Guice/ErrorInCustomProvider]: TypeNotPresentException: Type NativeExtension not present
+  at ClassRealm[extension>org.graalvm.buildtools:native-maven-plugin:0.10.3, parent: Launcher$AppClassLoader@4e25154f]
+      \_ installed by: WireModule -> PlexusBindingModule
+  while locating AbstractMavenLifecycleParticipant annotated with @Named(value=native-build-tools)
+
+Learn more:
+  https://github.com/google/guice/wiki/ERROR_IN_CUSTOM_PROVIDER
+
+1 error
+
+======================
+Full classname legend:
+======================
+AbstractMavenLifecycleParticipant: "org.apache.maven.AbstractMavenLifecycleParticipant"
+Launcher$AppClassLoader:           "sun.misc.Launcher$AppClassLoader"
+Named:                             "com.google.inject.name.Named"
+NativeExtension:                   "org.graalvm.buildtools.maven.NativeExtension"
+PlexusBindingModule:               "org.eclipse.sisu.plexus.PlexusBindingModule"
+WireModule:                        "org.eclipse.sisu.wire.WireModule"
+========================
+End of classname legend:
+========================
+
+    at com.google.inject.internal.InternalProvisionException.toProvisionException (InternalProvisionException.java:251)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1104)
+    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:83)
+    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:53)
+    at org.eclipse.sisu.wire.EntryListAdapter$ValueIterator.next (EntryListAdapter.java:113)
+    at java.util.AbstractCollection.addAll (Unknown Source)
+    at org.apache.maven.DefaultMaven.getProjectScopedExtensionComponents (DefaultMaven.java:358)
+    at org.apache.maven.DefaultMaven.getLifecycleParticipants (DefaultMaven.java:338)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:220)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
+    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
+    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:906)
+    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:283)
+    at org.apache.maven.cli.MavenCli.main (MavenCli.java:206)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0 (Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke (Unknown Source)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke (Unknown Source)
+    at java.lang.reflect.Method.invoke (Unknown Source)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:361)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
+Caused by: java.lang.TypeNotPresentException: Type org.graalvm.buildtools.maven.NativeExtension not present
+    at org.eclipse.sisu.space.URLClassSpace.loadClass (URLClassSpace.java:149)
+    at org.eclipse.sisu.space.NamedClass.load (NamedClass.java:48)
+    at org.eclipse.sisu.space.AbstractDeferredClass.get (AbstractDeferredClass.java:50)
+    at com.google.inject.internal.ProviderInternalFactory.provision (ProviderInternalFactory.java:86)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision (InternalFactoryToInitializableAdapter.java:57)
+    at com.google.inject.internal.ProviderInternalFactory$1.call (ProviderInternalFactory.java:67)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:109)
+    at org.eclipse.sisu.bean.BeanScheduler$CycleActivator.onProvision (BeanScheduler.java:232)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:117)
+    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
+    at com.google.inject.internal.ProviderInternalFactory.circularGet (ProviderInternalFactory.java:62)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.get (InternalFactoryToInitializableAdapter.java:47)
+    at com.google.inject.internal.ProviderToInternalFactoryAdapter.get (ProviderToInternalFactoryAdapter.java:40)
+    at com.google.inject.internal.SingletonScope$1.get (SingletonScope.java:169)
+    at com.google.inject.internal.InternalFactoryToProviderAdapter.get (InternalFactoryToProviderAdapter.java:45)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1101)
+    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:83)
+    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:53)
+    at org.eclipse.sisu.wire.EntryListAdapter$ValueIterator.next (EntryListAdapter.java:113)
+    at java.util.AbstractCollection.addAll (Unknown Source)
+    at org.apache.maven.DefaultMaven.getProjectScopedExtensionComponents (DefaultMaven.java:358)
+    at org.apache.maven.DefaultMaven.getLifecycleParticipants (DefaultMaven.java:338)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:220)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
+    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
+    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:906)
+    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:283)
+    at org.apache.maven.cli.MavenCli.main (MavenCli.java:206)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0 (Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke (Unknown Source)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke (Unknown Source)
+    at java.lang.reflect.Method.invoke (Unknown Source)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:361)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
+Caused by: java.lang.UnsupportedClassVersionError: org/graalvm/buildtools/maven/NativeExtension has been compiled by a more recent version of the Java Runtime (class file version 55.0), this version of the Java Runtime only recognizes class file versions up to 52.0
+    at java.lang.ClassLoader.defineClass1 (Native Method)
+    at java.lang.ClassLoader.defineClass (Unknown Source)
+    at java.security.SecureClassLoader.defineClass (Unknown Source)
+    at java.net.URLClassLoader.defineClass (Unknown Source)
+    at java.net.URLClassLoader.access$100 (Unknown Source)
+    at java.net.URLClassLoader$1.run (Unknown Source)
+    at java.net.URLClassLoader$1.run (Unknown Source)
+    at java.security.AccessController.doPrivileged (Native Method)
+    at java.net.URLClassLoader.findClass (Unknown Source)
+    at org.codehaus.plexus.classworlds.realm.ClassRealm.findClassInternal (ClassRealm.java:256)
+    at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClassFromSelf (ClassRealm.java:351)
+    at org.codehaus.plexus.classworlds.strategy.SelfFirstStrategy.loadClass (SelfFirstStrategy.java:36)
+    at org.codehaus.plexus.classworlds.realm.ClassRealm.unsynchronizedLoadClass (ClassRealm.java:225)
+    at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass (ClassRealm.java:210)
+    at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass (ClassRealm.java:205)
+    at org.eclipse.sisu.space.URLClassSpace.loadClass (URLClassSpace.java:141)
+    at org.eclipse.sisu.space.NamedClass.load (NamedClass.java:48)
+    at org.eclipse.sisu.space.AbstractDeferredClass.get (AbstractDeferredClass.java:50)
+    at com.google.inject.internal.ProviderInternalFactory.provision (ProviderInternalFactory.java:86)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision (InternalFactoryToInitializableAdapter.java:57)
+    at com.google.inject.internal.ProviderInternalFactory$1.call (ProviderInternalFactory.java:67)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:109)
+    at org.eclipse.sisu.bean.BeanScheduler$CycleActivator.onProvision (BeanScheduler.java:232)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:117)
+    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
+    at com.google.inject.internal.ProviderInternalFactory.circularGet (ProviderInternalFactory.java:62)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.get (InternalFactoryToInitializableAdapter.java:47)
+    at com.google.inject.internal.ProviderToInternalFactoryAdapter.get (ProviderToInternalFactoryAdapter.java:40)
+    at com.google.inject.internal.SingletonScope$1.get (SingletonScope.java:169)
+    at com.google.inject.internal.InternalFactoryToProviderAdapter.get (InternalFactoryToProviderAdapter.java:45)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1101)
+    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:83)
+    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:53)
+    at org.eclipse.sisu.wire.EntryListAdapter$ValueIterator.next (EntryListAdapter.java:113)
+    at java.util.AbstractCollection.addAll (Unknown Source)
+    at org.apache.maven.DefaultMaven.getProjectScopedExtensionComponents (DefaultMaven.java:358)
+    at org.apache.maven.DefaultMaven.getLifecycleParticipants (DefaultMaven.java:338)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:220)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
+    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
+    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:906)
+    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:283)
+    at org.apache.maven.cli.MavenCli.main (MavenCli.java:206)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0 (Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke (Unknown Source)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke (Unknown Source)
+    at java.lang.reflect.Method.invoke (Unknown Source)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:361)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
+[ERROR] 
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/InternalErrorException
+[DEBUG] Shutting down adapter factory; available factories [file-lock, rwlock-local, semaphore-local, noop]; available name mappers [discriminating, file-gav, file-hgav, file-static, gav, static]
+[DEBUG] Shutting down 'file-lock' factory
+[DEBUG] Shutting down 'rwlock-local' factory
+[DEBUG] Shutting down 'semaphore-local' factory
+[DEBUG] Shutting down 'noop' factory
