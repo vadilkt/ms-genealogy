@@ -1,6 +1,8 @@
 package com.example.genealogie.repository;
 
 import com.example.genealogie.model.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -41,6 +43,16 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
             "LOWER(bp.city) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(bp.country) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Profile> findByKeywordWithProfessionalProfiles(@Param("keyword") String keyword);
+
+    @Query("SELECT p FROM Profile p LEFT JOIN p.birthPlace bp WHERE " +
+            "LOWER(p.firstName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(p.lastName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(p.residence) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(bp.city) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(bp.country) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    Page<Profile> findByKeywordPaged(@Param("keyword") String keyword, Pageable pageable);
+
+    Page<Profile> findAll(Pageable pageable);
 
     List<Profile> findByFather_Id(Long fatherId);
 

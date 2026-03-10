@@ -10,6 +10,8 @@ import com.example.genealogie.service.NotificationService;
 import com.example.genealogie.service.ProfileService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -85,6 +87,14 @@ public class ProfileServiceImpl implements ProfileService {
                     profiles.stream().map(Profile::getId).toList());
         }
         return profiles;
+    }
+
+    @Override
+    public Page<Profile> searchProfile(String keyword, Pageable pageable) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return profileRepository.findAll(pageable);
+        }
+        return profileRepository.findByKeywordPaged(keyword, pageable);
     }
 
     @Override

@@ -16,6 +16,9 @@ import com.example.genealogie.service.ProfessionalProfileService;
 import com.example.genealogie.service.ProfileService;
 import com.example.genealogie.service.ValidationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -93,12 +96,12 @@ public class ProfileController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ProfileResponseDto>> search(@RequestParam(required = false) String keyword,
-            @AuthenticationPrincipal User currentUser) {
-        List<Profile> profiles = profileService.searchProfile(keyword);
-        List<ProfileResponseDto> profileResponseDtos = profiles.stream()
-                .map(p -> profileMapper.toDto(p, currentUser))
-                .toList();
+    public ResponseEntity<Page<ProfileResponseDto>> search(
+            @RequestParam(required = false) String keyword,
+            @AuthenticationPrincipal User currentUser,
+            @PageableDefault(size = 20, sort = "id") Pageable pageable) {
+        Page<ProfileResponseDto> profileResponseDtos = profileService.searchProfile(keyword, pageable)
+                .map(p -> profileMapper.toDto(p, currentUser));
 
         return ResponseEntity.ok().body(profileResponseDtos);
     }
