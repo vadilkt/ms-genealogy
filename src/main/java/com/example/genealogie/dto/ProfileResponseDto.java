@@ -20,6 +20,10 @@ public class ProfileResponseDto {
     private String gender;
     private ZonedDateTime dateOfBirth;
     private ZonedDateTime dateOfDeath;
+    private String birthDateQualifier;
+    private String birthDatePrecision;
+    private String deathDateQualifier;
+    private String deathDatePrecision;
     private Integer age;
     private String residence;
     private PlaceDto birthPlace;

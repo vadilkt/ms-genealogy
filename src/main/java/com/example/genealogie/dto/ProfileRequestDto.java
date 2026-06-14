@@ -23,6 +23,17 @@ public class ProfileRequestDto {
     private ZonedDateTime dateOfBirth;
     @Nullable
     private ZonedDateTime dateOfDeath;
+
+    /** Qualificatif/précision des dates (optionnels ; défaut EXACT / DAY). */
+    @Nullable
+    private String birthDateQualifier;
+    @Nullable
+    private String birthDatePrecision;
+    @Nullable
+    private String deathDateQualifier;
+    @Nullable
+    private String deathDatePrecision;
+
     @NotNull
     private String residence;
     @Nullable

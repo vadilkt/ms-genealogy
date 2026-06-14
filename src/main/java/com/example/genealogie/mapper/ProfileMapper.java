@@ -5,6 +5,8 @@ import com.example.genealogie.dto.PlaceDto;
 import com.example.genealogie.dto.ProfileRequestDto;
 import com.example.genealogie.dto.ProfileResponseDto;
 import com.example.genealogie.dto.ProfessionalProfileResponseDto;
+import com.example.genealogie.model.DatePrecision;
+import com.example.genealogie.model.DateQualifier;
 import com.example.genealogie.model.Gender;
 import com.example.genealogie.model.Place;
 import com.example.genealogie.model.Profile;
@@ -60,33 +62,32 @@ public abstract class ProfileMapper {
         dto.setResidence(profile.getResidence());
         dto.setDateOfBirth(profile.getDateOfBirth());
         dto.setDateOfDeath(profile.getDateOfDeath());
+        applyDateMeta(dto, profile);
         dto.setAge(computeAge(profile.getDateOfBirth(), profile.getDateOfDeath()));
         dto.setBirthPlace(placeMapper.toDto(profile.getBirthPlace()));
         dto.setDeathPlace(placeMapper.toDto(profile.getDeathPlace()));
         dto.setCreatedAt(profile.getCreatedAt());
         dto.setUpdatedAt(profile.getUpdatedAt());
 
-        if (currentUser != null && profileService.isOwnerOrAdmin(profile, currentUser)) {
-            List<ProfessionalProfileResponseDto> professionalDtos = profile.getProfessionalProfiles() == null
-                    ? Collections.emptyList()
-                    : profile.getProfessionalProfiles()
-                            .stream()
-                            .map(professionalProfileMapper::toDto)
-                            .toList();
+        // Profession : donnée publique, visible par tous les utilisateurs.
+        List<ProfessionalProfileResponseDto> professionalDtos = profile.getProfessionalProfiles() == null
+                ? Collections.emptyList()
+                : profile.getProfessionalProfiles()
+                        .stream()
+                        .map(professionalProfileMapper::toDto)
+                        .toList();
+        dto.setProfessionalRecords(professionalDtos);
 
-            dto.setProfessionalRecords(professionalDtos);
-
-            List<AcademicProfileResponseDto> academicProfileResponseDtos = profile.getAcademicProfiles() == null
-                    ? Collections.emptyList()
-                    : profile.getAcademicProfiles().stream()
-                            .map(academicProfileMapper::toDto)
-                            .toList();
-
-            dto.setAcademicRecords(academicProfileResponseDtos);
-        } else {
-            dto.setProfessionalRecords(Collections.emptyList());
-            dto.setAcademicRecords(Collections.emptyList());
-        }
+        // Parcours académique : visible par le propriétaire/admin, ou pour une personne décédée.
+        boolean canSeeAcademic = (currentUser != null && profileService.isOwnerOrAdmin(profile, currentUser))
+                || profile.getDateOfDeath() != null;
+        List<AcademicProfileResponseDto> academicProfileResponseDtos = (canSeeAcademic
+                && profile.getAcademicProfiles() != null)
+                        ? profile.getAcademicProfiles().stream()
+                                .map(academicProfileMapper::toDto)
+                                .toList()
+                        : Collections.emptyList();
+        dto.setAcademicRecords(academicProfileResponseDtos);
 
         return dto;
     }
@@ -108,6 +109,7 @@ public abstract class ProfileMapper {
         dto.setResidence(profile.getResidence());
         dto.setDateOfBirth(profile.getDateOfBirth());
         dto.setDateOfDeath(profile.getDateOfDeath());
+        applyDateMeta(dto, profile);
         dto.setAge(computeAge(profile.getDateOfBirth(), profile.getDateOfDeath()));
         dto.setBirthPlace(placeMapper.toDto(profile.getBirthPlace()));
         dto.setDeathPlace(placeMapper.toDto(profile.getDeathPlace()));
@@ -116,6 +118,36 @@ public abstract class ProfileMapper {
         dto.setProfessionalRecords(Collections.emptyList());
         dto.setAcademicRecords(Collections.emptyList());
         return dto;
+    }
+
+    /** Copie les qualificatifs/précisions de dates (avec valeurs par défaut) vers le DTO. */
+    private void applyDateMeta(ProfileResponseDto dto, Profile profile) {
+        dto.setBirthDateQualifier((profile.getBirthDateQualifier() != null
+                ? profile.getBirthDateQualifier() : DateQualifier.EXACT).name());
+        dto.setBirthDatePrecision((profile.getBirthDatePrecision() != null
+                ? profile.getBirthDatePrecision() : DatePrecision.DAY).name());
+        dto.setDeathDateQualifier((profile.getDeathDateQualifier() != null
+                ? profile.getDeathDateQualifier() : DateQualifier.EXACT).name());
+        dto.setDeathDatePrecision((profile.getDeathDatePrecision() != null
+                ? profile.getDeathDatePrecision() : DatePrecision.DAY).name());
+    }
+
+    private DateQualifier parseQualifier(String value) {
+        if (value == null) return DateQualifier.EXACT;
+        try {
+            return DateQualifier.valueOf(value.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return DateQualifier.EXACT;
+        }
+    }
+
+    private DatePrecision parsePrecision(String value) {
+        if (value == null) return DatePrecision.DAY;
+        try {
+            return DatePrecision.valueOf(value.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return DatePrecision.DAY;
+        }
     }
 
     @Mapping(target = "id", ignore = true)
@@ -136,6 +168,10 @@ public abstract class ProfileMapper {
         profile.setResidence(requestDto.getResidence());
         profile.setDateOfBirth(requestDto.getDateOfBirth());
         profile.setDateOfDeath(requestDto.getDateOfDeath());
+        profile.setBirthDateQualifier(parseQualifier(requestDto.getBirthDateQualifier()));
+        profile.setBirthDatePrecision(parsePrecision(requestDto.getBirthDatePrecision()));
+        profile.setDeathDateQualifier(parseQualifier(requestDto.getDeathDateQualifier()));
+        profile.setDeathDatePrecision(parsePrecision(requestDto.getDeathDatePrecision()));
         profile.setGender(getGender(requestDto.getGender()));
         profile.setBirthPlace(requestDto.getBirthPlaceId() != null
                 ? placeRepository.findById(requestDto.getBirthPlaceId()).orElse(null)

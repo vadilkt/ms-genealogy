@@ -40,14 +40,14 @@ public class AcademicProfileServiceImpl implements AcademicProfileService {
                         () -> new EntityNotFoundException(
                                 String.format("Profil académique avec l'id %s introuvable", id)));
 
-        validateAccess(academicProfile.getProfile(), user);
+        validateReadAccess(academicProfile.getProfile(), user);
 
         return academicProfile;
     }
 
     @Override
     public List<AcademicProfile> getAcademicExpByProfileId(Long id, User user) {
-        validateAccess(profileService.getProfileById(id), user);
+        validateReadAccess(profileService.getProfileById(id), user);
         return academicProfileRepository.findAllByProfile_Id(id, DEFAULT_SORT);
     }
 
@@ -64,6 +64,18 @@ public class AcademicProfileServiceImpl implements AcademicProfileService {
         if (!profileService.isOwnerOrAdmin(profile, currentUser)) {
             throw new org.springframework.security.access.AccessDeniedException(
                     "Vous n'êtes pas autorisé à accéder ou à modifier les données académiques de ce profil");
+        }
+    }
+
+    /**
+     * Lecture : le parcours académique d'une personne <em>vivante</em> n'est visible
+     * que par son propriétaire ou un administrateur. Pour une personne décédée, il est public.
+     */
+    private void validateReadAccess(Profile profile, User currentUser) {
+        boolean deceased = profile.getDateOfDeath() != null;
+        if (!deceased && !profileService.isOwnerOrAdmin(profile, currentUser)) {
+            throw new org.springframework.security.access.AccessDeniedException(
+                    "Le parcours académique d'une personne vivante n'est visible que par son propriétaire ou un administrateur.");
         }
     }
 }

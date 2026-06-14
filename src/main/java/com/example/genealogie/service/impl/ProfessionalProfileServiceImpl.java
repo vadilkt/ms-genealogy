@@ -23,12 +23,11 @@ public class ProfessionalProfileServiceImpl implements ProfessionalProfileServic
 
     @Override
     public ProfessionalProfile getById(Long id, User user) {
-        ProfessionalProfile professionalProfile = professionalProfileRepository.findById(id)
+        // Lecture publique : la profession est une donnée visible par tous.
+        // L'autorisation d'écriture reste assurée par update()/delete().
+        return professionalProfileRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         String.format("Profil professionnel avec l'id %s introuvable", id)));
-        validateAccess(professionalProfile.getProfile(), user);
-
-        return professionalProfile;
     }
 
     @Override
@@ -39,7 +38,8 @@ public class ProfessionalProfileServiceImpl implements ProfessionalProfileServic
 
     @Override
     public List<ProfessionalProfile> getAllByProfileId(Long id, User user) {
-        validateAccess(profileService.getProfileById(id), user);
+        // Lecture publique : la profession est une donnée visible par tous.
+        profileService.getProfileById(id); // 404 si le profil n'existe pas
         return professionalProfileRepository.findAllByProfile_Id(id, DEFAULT_SORT);
     }
 
