@@ -7,8 +7,9 @@ import lombok.*;
 import java.time.ZonedDateTime;
 
 /**
- * Représente un mariage : un homme (husband) peut avoir plusieurs femmes (wives),
- * une femme (wife) ne peut avoir qu'un seul mari.
+ * Représente un mariage : un homme (husband) peut avoir plusieurs femmes (wives) ;
+ * une femme (wife) n'a qu'un seul mari <em>actif</em> (mariage sans date de fin) à la fois,
+ * mais peut se remarier après veuvage ou divorce.
  */
 @Entity
 @Table(name = "marriage")
@@ -29,8 +30,8 @@ public class Marriage {
     private Profile husband;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wife_id", nullable = false, unique = true)
-    @JsonBackReference("wife-marriage")
+    @JoinColumn(name = "wife_id", nullable = false)
+    @JsonBackReference("wife-marriages")
     private Profile wife;
 
     private ZonedDateTime marriageDate;

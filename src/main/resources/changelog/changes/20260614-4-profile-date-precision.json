@@ -1,0 +1,52 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "2026-06-14-04",
+        "author": "Vadil K.",
+        "comment": "Add qualifier/precision columns for uncertain birth and death dates (ABOUT/BEFORE/AFTER, YEAR/MONTH/DAY)",
+        "changes": [
+          {
+            "addColumn": {
+              "tableName": "profile",
+              "columns": [
+                {
+                  "column": {
+                    "name": "birth_date_qualifier",
+                    "type": "varchar(10)",
+                    "defaultValue": "EXACT",
+                    "constraints": { "nullable": false }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "birth_date_precision",
+                    "type": "varchar(10)",
+                    "defaultValue": "DAY",
+                    "constraints": { "nullable": false }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "death_date_qualifier",
+                    "type": "varchar(10)",
+                    "defaultValue": "EXACT",
+                    "constraints": { "nullable": false }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "death_date_precision",
+                    "type": "varchar(10)",
+                    "defaultValue": "DAY",
+                    "constraints": { "nullable": false }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

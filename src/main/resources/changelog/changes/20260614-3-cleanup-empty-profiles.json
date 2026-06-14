@@ -1,0 +1,18 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "2026-06-14-03",
+        "author": "Vadil K.",
+        "comment": "Remove blank auto-created profiles (legacy createEmpty flow) that were never filled in and carry no family link.",
+        "changes": [
+          {
+            "sql": {
+              "sql": "DELETE FROM profile p WHERE p.first_name IS NULL AND p.last_name IS NULL AND p.gender IS NULL AND p.date_of_birth IS NULL AND p.residence IS NULL AND NOT EXISTS (SELECT 1 FROM profile c WHERE c.father_id = p.id OR c.mother_id = p.id) AND NOT EXISTS (SELECT 1 FROM marriage m WHERE m.husband_id = p.id OR m.wife_id = p.id)"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

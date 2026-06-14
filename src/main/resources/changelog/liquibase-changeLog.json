@@ -12,6 +12,10 @@
     { "include": { "file": "changelog/changes/20260310-2-profile-unique-user-id.json" } },
     { "include": { "file": "changelog/changes/20260310-3-profile-audit-timestamps.json" } },
     { "include": { "file": "changelog/changes/20260310-4-create-notification-table.json" } },
-    { "include": { "file": "changelog/changes/20260311-1-add-missing-constraints.json" } }
+    { "include": { "file": "changelog/changes/20260311-1-add-missing-constraints.json" } },
+    { "include": { "file": "changelog/changes/20260614-1-drop-wife-unique.json" } },
+    { "include": { "file": "changelog/changes/20260614-2-active-marriage-index.json" } },
+    { "include": { "file": "changelog/changes/20260614-3-cleanup-empty-profiles.json" } },
+    { "include": { "file": "changelog/changes/20260614-4-profile-date-precision.json" } }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "2026-06-14-02",
+        "author": "Vadil K.",
+        "comment": "Enforce at most one ACTIVE marriage per wife (end_date IS NULL) via partial unique index. Postgres only; tests on H2 rely on the application guard.",
+        "changes": [
+          {
+            "sql": {
+              "dbms": "postgresql",
+              "sql": "CREATE UNIQUE INDEX uq_marriage_active_wife ON marriage (wife_id) WHERE end_date IS NULL"
+            }
+          }
+        ],
+        "rollback": [
+          {
+            "sql": {
+              "dbms": "postgresql",
+              "sql": "DROP INDEX uq_marriage_active_wife"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -42,6 +42,25 @@ public class Profile {
     private ZonedDateTime dateOfBirth;
     @Nullable
     private ZonedDateTime dateOfDeath;
+
+    /** Qualificatif/précision de la date de naissance (pour les dates incertaines). */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "birth_date_qualifier")
+    private DateQualifier birthDateQualifier = DateQualifier.EXACT;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "birth_date_precision")
+    private DatePrecision birthDatePrecision = DatePrecision.DAY;
+
+    /** Qualificatif/précision de la date de décès. */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "death_date_qualifier")
+    private DateQualifier deathDateQualifier = DateQualifier.EXACT;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "death_date_precision")
+    private DatePrecision deathDatePrecision = DatePrecision.DAY;
+
     private String residence;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -65,10 +84,13 @@ public class Profile {
     @JsonManagedReference("husband-marriages")
     private List<Marriage> marriagesAsHusband = new ArrayList<>();
 
-    /** Mariage où ce profil est l'épouse (une femme n'a qu'un seul mari). */
-    @OneToOne(mappedBy = "wife", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("wife-marriage")
-    private Marriage marriageAsWife;
+    /**
+     * Mariages où ce profil est l'épouse. Une femme n'a qu'un seul mari <em>actif</em>
+     * (mariage sans date de fin) à la fois, mais peut se remarier après veuvage ou divorce.
+     */
+    @OneToMany(mappedBy = "wife", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("wife-marriages")
+    private List<Marriage> marriagesAsWife = new ArrayList<>();
 
     @OneToMany(mappedBy = "profile")
     @JsonManagedReference

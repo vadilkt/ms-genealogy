@@ -1,0 +1,28 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "2026-06-14-01",
+        "author": "Vadil K.",
+        "comment": "Drop lifelong unique constraint on marriage.wife_id to allow remarriage (widowhood/divorce)",
+        "changes": [
+          {
+            "dropUniqueConstraint": {
+              "tableName": "marriage",
+              "constraintName": "marriage_wife_id_key"
+            }
+          }
+        ],
+        "rollback": [
+          {
+            "addUniqueConstraint": {
+              "tableName": "marriage",
+              "columnNames": "wife_id",
+              "constraintName": "marriage_wife_id_key"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
