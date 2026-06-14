@@ -177,6 +177,76 @@ class ValidationServiceImplTest {
     }
 
     @Test
+    void warns_whenMarriageEndDateBeforeMarriageDate() {
+        ZonedDateTime dob = ZonedDateTime.now().minusYears(40);
+        Profile husband = buildProfile(1L, dob, null, Gender.MALE);
+        Profile wife = buildProfile(2L, dob, null, Gender.FEMALE);
+
+        Marriage marriage = new Marriage();
+        marriage.setId(1L);
+        marriage.setHusband(husband);
+        marriage.setWife(wife);
+        marriage.setMarriageDate(ZonedDateTime.now().minusYears(10));
+        marriage.setEndDate(ZonedDateTime.now().minusYears(15)); // end before start
+
+        husband.getMarriagesAsHusband().add(marriage);
+
+        when(profileService.getProfileById(1L)).thenReturn(husband);
+        when(profileRepository.findByFather_Id(1L)).thenReturn(List.of());
+        when(profileRepository.findByMother_Id(1L)).thenReturn(List.of());
+
+        List<ValidationWarningDto> warnings = validationService.getProfileWarnings(1L, adminUser);
+
+        assertThat(warnings.stream().anyMatch(w -> "END_BEFORE_MARRIAGE".equals(w.getCode()))).isTrue();
+    }
+
+    @Test
+    void warns_whenParentTooYoungAtChildBirth() {
+        ZonedDateTime parentDob = ZonedDateTime.now().minusYears(20);
+        ZonedDateTime childDob = ZonedDateTime.now().minusYears(12); // parent was 8 at birth
+        Profile parent = buildProfile(1L, parentDob, null, Gender.MALE);
+        Profile child = buildProfile(2L, childDob, null, Gender.MALE);
+
+        when(profileService.getProfileById(1L)).thenReturn(parent);
+        when(profileRepository.findByFather_Id(1L)).thenReturn(List.of(child));
+        when(profileRepository.findByMother_Id(1L)).thenReturn(List.of());
+
+        List<ValidationWarningDto> warnings = validationService.getProfileWarnings(1L, adminUser);
+
+        assertThat(warnings.stream().anyMatch(w -> "PARENT_TOO_YOUNG".equals(w.getCode()))).isTrue();
+    }
+
+    @Test
+    void warns_whenMotherDeceasedBeforeChildBirth() {
+        Profile mother = buildProfile(1L, ZonedDateTime.now().minusYears(50),
+                ZonedDateTime.now().minusYears(30), Gender.FEMALE);
+        Profile child = buildProfile(2L, ZonedDateTime.now().minusYears(20), null, Gender.MALE);
+
+        when(profileService.getProfileById(1L)).thenReturn(mother);
+        when(profileRepository.findByFather_Id(1L)).thenReturn(List.of());
+        when(profileRepository.findByMother_Id(1L)).thenReturn(List.of(child));
+
+        List<ValidationWarningDto> warnings = validationService.getProfileWarnings(1L, adminUser);
+
+        assertThat(warnings.stream().anyMatch(w -> "MOTHER_DECEASED_BEFORE_BIRTH".equals(w.getCode()))).isTrue();
+    }
+
+    @Test
+    void warns_whenFatherDeceasedLongBeforeChildBirth() {
+        Profile father = buildProfile(1L, ZonedDateTime.now().minusYears(50),
+                ZonedDateTime.now().minusYears(30), Gender.MALE);
+        Profile child = buildProfile(2L, ZonedDateTime.now().minusYears(20), null, Gender.MALE);
+
+        when(profileService.getProfileById(1L)).thenReturn(father);
+        when(profileRepository.findByFather_Id(1L)).thenReturn(List.of(child));
+        when(profileRepository.findByMother_Id(1L)).thenReturn(List.of());
+
+        List<ValidationWarningDto> warnings = validationService.getProfileWarnings(1L, adminUser);
+
+        assertThat(warnings.stream().anyMatch(w -> "FATHER_DECEASED_BEFORE_CONCEPTION".equals(w.getCode()))).isTrue();
+    }
+
+    @Test
     void noWarning_whenMarriageDateIsNull() {
         ZonedDateTime dob = ZonedDateTime.now().minusYears(40);
         Profile husband = buildProfile(1L, dob, null, Gender.MALE);

@@ -9,6 +9,7 @@ import com.example.genealogie.model.User;
 import com.example.genealogie.repository.MarriageRepository;
 import com.example.genealogie.repository.ProfileRepository;
 import com.example.genealogie.service.FamilyService;
+import com.example.genealogie.service.NotificationService;
 import com.example.genealogie.service.ProfileService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class FamilyServiceImpl implements FamilyService {
     private final MarriageRepository marriageRepository;
     private final ProfileService profileService;
     private final ProfileMapper profileMapper;
+    private final NotificationService notificationService;
 
     @Override
     @Transactional
@@ -48,7 +50,10 @@ public class FamilyServiceImpl implements FamilyService {
             throw new IllegalArgumentException("Cycle détecté : ce profil est déjà un descendant du père proposé.");
         }
         child.setFather(father);
-        return profileRepository.save(child);
+        Profile saved = profileRepository.save(child);
+        notifyOwnerIfThirdParty(father, currentUser,
+                "Votre profil « " + fullName(father) + " » a été défini comme père de « " + fullName(child) + " ».");
+        return saved;
     }
 
     @Override
@@ -67,7 +72,10 @@ public class FamilyServiceImpl implements FamilyService {
             throw new IllegalArgumentException("Cycle détecté : ce profil est déjà un descendant de la mère proposée.");
         }
         child.setMother(mother);
-        return profileRepository.save(child);
+        Profile saved = profileRepository.save(child);
+        notifyOwnerIfThirdParty(mother, currentUser,
+                "Votre profil « " + fullName(mother) + " » a été défini comme mère de « " + fullName(child) + " ».");
+        return saved;
     }
 
     @Override
@@ -107,9 +115,14 @@ public class FamilyServiceImpl implements FamilyService {
             throw new IllegalArgumentException("Un mariage doit associer un homme et une femme.");
         }
 
-        if (marriageRepository.existsByWife_Id(wife.getId())) {
+        if (request.getEndDate() != null && request.getMarriageDate() != null
+                && request.getEndDate().isBefore(request.getMarriageDate())) {
+            throw new IllegalArgumentException("La date de fin du mariage est antérieure à la date de mariage.");
+        }
+
+        if (marriageRepository.existsByWife_IdAndEndDateIsNull(wife.getId())) {
             throw new IllegalArgumentException(
-                    "Cette personne est déjà mariée. Une femme ne peut avoir qu'un seul mari.");
+                    "Cette personne a déjà un mariage en cours. Terminez le mariage précédent (veuvage ou divorce) avant d'en enregistrer un nouveau.");
         }
 
         Marriage marriage = new Marriage();
@@ -118,8 +131,10 @@ public class FamilyServiceImpl implements FamilyService {
         marriage.setMarriageDate(request.getMarriageDate());
         marriage.setEndDate(request.getEndDate());
         husband.getMarriagesAsHusband().add(marriage);
-        wife.setMarriageAsWife(marriage);
+        wife.getMarriagesAsWife().add(marriage);
         marriage = marriageRepository.save(marriage);
+        notifyOwnerIfThirdParty(spouse, currentUser,
+                "Votre profil « " + fullName(spouse) + " » a été enregistré comme marié à « " + fullName(profile) + " ».");
         return toMarriageResponseDto(marriage);
     }
 
@@ -135,7 +150,7 @@ public class FamilyServiceImpl implements FamilyService {
                     "Vous n'êtes pas autorisé à supprimer ce mariage.");
         }
         marriage.getHusband().getMarriagesAsHusband().remove(marriage);
-        marriage.getWife().setMarriageAsWife(null);
+        marriage.getWife().getMarriagesAsWife().remove(marriage);
         marriageRepository.delete(marriage);
     }
 
@@ -176,9 +191,9 @@ public class FamilyServiceImpl implements FamilyService {
                 result.add(profileMapper.toDtoSummary(m.getWife()));
             }
         } else {
-            marriageRepository.findByWife_Id(profileId)
-                    .map(m -> profileMapper.toDtoSummary(m.getHusband()))
-                    .ifPresent(result::add);
+            for (Marriage m : marriageRepository.findByWife_IdOrderByMarriageDateAsc(profileId)) {
+                result.add(profileMapper.toDtoSummary(m.getHusband()));
+            }
         }
         return result;
     }
@@ -217,7 +232,9 @@ public class FamilyServiceImpl implements FamilyService {
                 marriages.add(toMarriageResponseDto(m));
             }
         } else {
-            marriageRepository.findByWife_Id(profileId).ifPresent(m -> marriages.add(toMarriageResponseDto(m)));
+            for (Marriage m : marriageRepository.findByWife_IdOrderByMarriageDateAsc(profileId)) {
+                marriages.add(toMarriageResponseDto(m));
+            }
         }
 
         return FamilyResponseDto.builder()
@@ -321,6 +338,25 @@ public class FamilyServiceImpl implements FamilyService {
             throw new org.springframework.security.access.AccessDeniedException(
                     "Vous n'êtes pas autorisé à modifier ce profil.");
         }
+    }
+
+    /**
+     * Notifie le propriétaire d'un profil lorsqu'un <em>autre</em> utilisateur le rattache
+     * à son arbre (parent ou conjoint). Aucune notification si le profil n'a pas de
+     * propriétaire ou si l'auteur de l'action est ce propriétaire.
+     */
+    private void notifyOwnerIfThirdParty(Profile target, User actor, String message) {
+        User owner = target.getUser();
+        if (owner != null && (actor == null || !owner.getId().equals(actor.getId()))) {
+            notificationService.notify(owner, message);
+        }
+    }
+
+    private String fullName(Profile profile) {
+        String first = profile.getFirstName() != null ? profile.getFirstName() : "";
+        String last = profile.getLastName() != null ? profile.getLastName() : "";
+        String name = (first + " " + last).trim();
+        return name.isEmpty() ? "#" + profile.getId() : name;
     }
 
     private MarriageResponseDto toMarriageResponseDto(Marriage m) {

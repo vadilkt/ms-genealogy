@@ -18,9 +18,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -39,6 +41,9 @@ class FamilyServiceImplTest {
 
     @Mock
     private ProfileMapper profileMapper;
+
+    @Mock
+    private NotificationService notificationService;
 
     @InjectMocks
     private FamilyServiceImpl familyService;
@@ -186,25 +191,24 @@ class FamilyServiceImplTest {
         when(profileService.getProfileById(1L)).thenReturn(husband);
         when(profileService.isOwnerOrAdmin(husband, adminUser)).thenReturn(true);
         when(profileService.getProfileById(2L)).thenReturn(wife);
-        when(marriageRepository.existsByWife_Id(2L)).thenReturn(true); // already married
+        when(marriageRepository.existsByWife_IdAndEndDateIsNull(2L)).thenReturn(true); // active marriage exists
 
         CreateMarriageRequestDto request = new CreateMarriageRequestDto(2L, null, null);
 
         assertThatThrownBy(() -> familyService.addMarriage(1L, request, adminUser))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("déjà mariée");
+                .hasMessageContaining("mariage en cours");
     }
 
     @Test
     void addMarriage_successWhenValidMaleAndFemale() {
         Profile husband = buildProfile(1L, Gender.MALE);
         Profile wife = buildProfile(2L, Gender.FEMALE);
-        wife.setMarriageAsWife(null);
 
         when(profileService.getProfileById(1L)).thenReturn(husband);
         when(profileService.isOwnerOrAdmin(husband, adminUser)).thenReturn(true);
         when(profileService.getProfileById(2L)).thenReturn(wife);
-        when(marriageRepository.existsByWife_Id(2L)).thenReturn(false);
+        when(marriageRepository.existsByWife_IdAndEndDateIsNull(2L)).thenReturn(false);
 
         Marriage savedMarriage = new Marriage();
         savedMarriage.setId(10L);
@@ -237,5 +241,47 @@ class FamilyServiceImplTest {
         assertThatThrownBy(() -> familyService.setMother(1L, 2L, adminUser))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Cycle");
+    }
+
+    @Test
+    void addMarriage_allowsRemarriageWhenNoActiveMarriage() {
+        // Veuve/divorcée : aucun mariage actif → le remariage est autorisé.
+        Profile husband = buildProfile(1L, Gender.MALE);
+        Profile wife = buildProfile(2L, Gender.FEMALE);
+
+        when(profileService.getProfileById(1L)).thenReturn(husband);
+        when(profileService.isOwnerOrAdmin(husband, adminUser)).thenReturn(true);
+        when(profileService.getProfileById(2L)).thenReturn(wife);
+        when(marriageRepository.existsByWife_IdAndEndDateIsNull(2L)).thenReturn(false);
+
+        Marriage saved = new Marriage();
+        saved.setId(20L);
+        saved.setHusband(husband);
+        saved.setWife(wife);
+        when(marriageRepository.save(any(Marriage.class))).thenReturn(saved);
+
+        MarriageResponseDto result = familyService.addMarriage(
+                1L, new CreateMarriageRequestDto(2L, null, null), adminUser);
+
+        assertThat(result).isNotNull();
+        assertThat(wife.getMarriagesAsWife()).hasSize(1);
+    }
+
+    @Test
+    void addMarriage_throwsWhenEndDateBeforeMarriageDate() {
+        Profile husband = buildProfile(1L, Gender.MALE);
+        Profile wife = buildProfile(2L, Gender.FEMALE);
+
+        when(profileService.getProfileById(1L)).thenReturn(husband);
+        when(profileService.isOwnerOrAdmin(husband, adminUser)).thenReturn(true);
+        when(profileService.getProfileById(2L)).thenReturn(wife);
+
+        ZonedDateTime marriageDate = ZonedDateTime.now().minusYears(5);
+        ZonedDateTime endDate = ZonedDateTime.now().minusYears(10); // before marriage
+        CreateMarriageRequestDto request = new CreateMarriageRequestDto(2L, marriageDate, endDate);
+
+        assertThatThrownBy(() -> familyService.addMarriage(1L, request, adminUser))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("antérieure à la date de mariage");
     }
 }
