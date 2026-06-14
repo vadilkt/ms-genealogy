@@ -112,6 +112,13 @@ public class ProfileServiceImpl implements ProfileService {
             throw new org.springframework.security.access.AccessDeniedException(
                     "You are not authorized to delete this profile");
         }
+        long children = profileRepository.countByFather_Id(profileId)
+                + profileRepository.countByMother_Id(profileId);
+        if (children > 0) {
+            throw new IllegalStateException(
+                    "Impossible de supprimer ce profil : il est parent de " + children
+                            + " profil(s). Détachez d'abord les enfants.");
+        }
         profileRepository.delete(profile);
     }
 
@@ -148,13 +155,6 @@ public class ProfileServiceImpl implements ProfileService {
                     orphans.stream().map(Profile::getId).toList());
         }
         return orphans;
-    }
-
-    @Override
-    public Profile createEmpty(User user) {
-        Profile profile = new Profile();
-        profile.setUser(user);
-        return profileRepository.save(profile);
     }
 
     @Override

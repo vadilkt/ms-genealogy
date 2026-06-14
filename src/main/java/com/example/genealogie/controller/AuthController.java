@@ -5,7 +5,6 @@ import com.example.genealogie.dto.AuthenticationRequest;
 import com.example.genealogie.dto.AuthenticationResponse;
 import com.example.genealogie.dto.UserRequestDto;
 import com.example.genealogie.model.User;
-import com.example.genealogie.service.ProfileService;
 import com.example.genealogie.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,13 +27,12 @@ public class AuthController {
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
     private final UserService userService;
-    private final ProfileService profileService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid UserRequestDto userRequestDto) {
         log.info("Inscription de l'utilisateur : {}", userRequestDto.getUsername());
-        User newUser = userService.createUser(userRequestDto);
-        profileService.createEmpty(newUser);
+        userService.createUser(userRequestDto);
+        // Le profil n'est plus auto-créé : l'utilisateur le crée explicitement via POST /api/profile.
         return ResponseEntity.ok("Utilisateur créé");
     }
 

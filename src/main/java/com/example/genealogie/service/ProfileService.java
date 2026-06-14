@@ -28,8 +28,6 @@ public interface ProfileService {
 
     Profile assignUser(Long profileId, Long userId);
 
-    Profile createEmpty(User user);
-
     List<Profile> getOrphanProfiles();
 
     List<ProfileNodeDto> getFamilyGraph();

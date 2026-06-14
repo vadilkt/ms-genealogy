@@ -58,6 +58,10 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
     List<Profile> findByMother_Id(Long motherId);
 
+    long countByFather_Id(Long fatherId);
+
+    long countByMother_Id(Long motherId);
+
     @Query("SELECT DISTINCT p FROM Profile p LEFT JOIN FETCH p.professionalProfiles WHERE p.user IS NULL")
     List<Profile> findOrphansWithProfessionalProfiles();
 
